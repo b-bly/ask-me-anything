@@ -12,9 +12,8 @@ class List extends Component {
   }
 
   componentDidMount() {
-
+    
   }
-
 
   render() {
     const questions = ['What?', 'When?', 'Where?', 'How?', 'Who?']
