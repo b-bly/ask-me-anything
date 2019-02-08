@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { login } from './util/APIUtils';
+import { signup } from '../../util/APIUtils';
 import './Login.css'
-import { ACCESS_TOKEN } from './constants'
 
 import { Button, Card, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
@@ -15,11 +14,13 @@ const formButtonStyle = {
 
 }
 
-class Login extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usernameOrEmail: '',
+      username: '',
+      email: '',
+      name: '',
       password: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,17 +35,12 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const loginRequest = {
-      usernameOrEmail: this.state.usernameOrEmail,
-      password: this.state.password,
-    }
-    login(loginRequest)
+    const signupRequest = { ...this.state }
+    
+    signup(signupRequest)
       .then(response => {
-        // store auth token
-        localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-
-        // redirects home
-        this.props.onLogin();
+        // redirects to login
+        this.props.history.push("/login");
       }).catch(error => {
         console.log(error);
 
@@ -56,14 +52,29 @@ class Login extends Component {
     return (
       <div className="container">
         <Card className="card-login">
-        <p>Login:</p>
+          <p>Sign up:</p>
           <Form className="login-form" onSubmit={this.handleSubmit}>
             <FormGroup >
               <Label>
                 Username:
-          </Label>
-              <Input type="text" value={this.state.usernameOrEmail} onChange={this.handleChange} name="usernameOrEmail" />
+              </Label>
+              <Input type="text" value={this.state.username} onChange={this.handleChange} name="username" />
             </FormGroup>
+
+            <FormGroup >
+              <Label>
+                Name:
+              </Label>
+              <Input type="text" value={this.state.name} onChange={this.handleChange} name="name" />
+            </FormGroup>
+
+            <FormGroup >
+              <Label>
+                Email:
+              </Label>
+              <Input type="email" value={this.state.email} onChange={this.handleChange} name="email" />
+            </FormGroup>
+
             <FormGroup >
               <Label>
                 Password:
@@ -80,4 +91,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;

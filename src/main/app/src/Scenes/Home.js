@@ -1,13 +1,17 @@
 import React, {Component} from 'react'
 
+// Components
+import List from './QAndA/List'
+
 class Home extends Component {
   
   render() {
     return (
       <div className="App">
         <div>
-        Home
+        
         </div>
+        <List />
        
       </div>
     );

@@ -8,9 +8,9 @@ import { getCurrentUser } from './util/APIUtils'
 import { ACCESS_TOKEN } from './constants'
 
 // Components
-import Home from './Home'
-import Login from './Login'
-import Register from './Register'
+import Home from './Scenes/Home'
+import Login from './Scenes/User/Login'
+import Register from './Scenes/User/Register'
 
 class App extends Component {
   constructor(props) {
@@ -88,7 +88,7 @@ class App extends Component {
         >Logout</button>
 
         <Switch>
-          <Route exact path="/client/forbidden"
+          <Route exact path="/"
             render={(props) => <Home />}>
           </Route>
           <Route path="/client/login"
