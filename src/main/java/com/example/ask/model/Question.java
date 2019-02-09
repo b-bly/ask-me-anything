@@ -51,6 +51,7 @@ public class Question {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
     
     
 }

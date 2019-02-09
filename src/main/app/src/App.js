@@ -11,6 +11,7 @@ import { ACCESS_TOKEN } from './constants'
 import Home from './Scenes/Home'
 import Login from './Scenes/User/Login'
 import Register from './Scenes/User/Register'
+import CreateQuestion from './Scenes/QAndA/CreateQuestion/CreateQuestion'
 
 class App extends Component {
   constructor(props) {
@@ -86,6 +87,8 @@ class App extends Component {
         <button
           onClick={this.handleLogout.bind(this)}
         >Logout</button>
+
+        <CreateQuestion />
 
         <Switch>
           <Route exact path="/"
