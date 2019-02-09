@@ -33,6 +33,7 @@ class CreateQuestion extends Component {
       'Content-Type': 'application/json',
     })
 
+    // add token
     if (localStorage.getItem(ACCESS_TOKEN)) {
       headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
     }
