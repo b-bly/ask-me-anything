@@ -32,7 +32,7 @@ class Login extends Component {
     })
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const loginRequest = {
       usernameOrEmail: this.state.usernameOrEmail,
@@ -40,12 +40,16 @@ class Login extends Component {
     }
     login(loginRequest)
       .then(response => {
+        console.log('logging response: ');
+        console.log(response)
         // store auth token
         localStorage.setItem(ACCESS_TOKEN, response.accessToken);
 
         // redirects home
         this.props.onLogin();
       }).catch(error => {
+        console.log('logging error');
+        
         console.log(error);
 
       });

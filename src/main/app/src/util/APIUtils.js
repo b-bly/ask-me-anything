@@ -2,23 +2,29 @@ import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
 const request = (options) => {
   const headers = new Headers({
-      'Content-Type': 'application/json',
+    'Content-Type': 'application/json',
   })
 
-  if(localStorage.getItem(ACCESS_TOKEN)) {
+  if (localStorage.getItem(ACCESS_TOKEN)) {
     headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
-}
+  }
 
-  const defaults = {headers: headers};
+  const defaults = { headers: headers };
   options = Object.assign({}, defaults, options);
 
   return fetch(options.url, options)
-  .then(response => 
+    .then(response =>
       response.json().then(json => {
-          return json;
+        return json;
       })
-  );
+    );
 };
+
+// Question methods
+
+export function createQuestion(questionRequest) {
+  return request()
+}
 
 // Auth methods
 
@@ -30,21 +36,22 @@ export function login(loginRequest) {
   });
 }
 
+
 export function signup(signupRequest) {
   return request({
-      url: API_BASE_URL + "/auth/signup",
-      method: 'POST',
-      body: JSON.stringify(signupRequest)
+    url: API_BASE_URL + "/auth/signup",
+    method: 'POST',
+    body: JSON.stringify(signupRequest)
   });
 }
 
 export function getCurrentUser() {
-  if(!localStorage.getItem(ACCESS_TOKEN)) {
-      return Promise.reject("No access token set.");
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    return Promise.reject("No access token set.");
   }
 
   return request({
-      url: API_BASE_URL + "/user/me",
-      method: 'GET'
+    url: API_BASE_URL + "/user/me",
+    method: 'GET'
   });
 }
