@@ -1,11 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import { Link } from 'react-router-dom'
+
+// Style
+import { StyledButton, Container, StyledRow } from './QuestionsStyle'
+
+
 //Components
 import Question from './Question'
 
-const container = {
-  display: 'flex',
-  flexDirection: 'column'
-}
+
 
 class Questions extends Component {
   constructor() {
@@ -15,9 +18,17 @@ class Questions extends Component {
 
   render() {
     return (
-      <div style={container}>
-        {this.props.children()}
-      </div>
+      <Container>
+        <StyledRow>
+          <StyledButton
+            tag={Link} to="/new-question"
+            color="primary">New Question
+          </StyledButton>
+        </StyledRow>
+        <Fragment>
+          {this.props.children()}
+        </Fragment>
+      </Container>
     )
   }
 }

@@ -31,8 +31,6 @@ public class QuestionService {
         Question question = new Question(questionRequest.getQuestionText());
         question.setUser(user);
 
-        System.out.println("create question: " + question);
-        
         // save question
         return questionRepository.save(question);
 	}    

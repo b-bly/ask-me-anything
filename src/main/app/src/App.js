@@ -88,17 +88,22 @@ class App extends Component {
           onClick={this.handleLogout.bind(this)}
         >Logout</button>
 
-        <CreateQuestion />
 
+        {/* <CreateQuestion /> */}
         <Switch>
           <Route exact path="/"
             render={(props) => <Home />}>
           </Route>
+
           <Route path="/client/login"
             render={(props) => <Login onLogin={this.handleLogin.bind(this)} {...props} />}>
           </Route>
           <Route path="/register"
             render={(props) => <Register onRegister={this.handleRegister.bind(this)} />}>
+          </Route>
+          <Route
+            path="/new-question"
+            render={() => <CreateQuestion />}>
           </Route>
         </Switch>
       </div>

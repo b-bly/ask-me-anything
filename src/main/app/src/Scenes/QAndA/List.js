@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 
-
 // Components
 import Questions from './Questions'
 import Question from './Question'
@@ -20,7 +19,7 @@ class List extends Component {
     return (
       <div>
         <Questions questions={questions}>
-
+          
        {/* Any props that are passed to children in the Parent Questions component go in the
        () on the next line and then can be used as props in child Question or other 
        components */}

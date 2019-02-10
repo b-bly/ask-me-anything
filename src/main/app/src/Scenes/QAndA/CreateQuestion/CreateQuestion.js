@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // Style
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { StyledFormGroup, QuestionColumn, StyledButton } from './CreateQuestionStyle'
+import { Button, Form, Label, Input } from 'reactstrap';
+import { StyledFormGroup, QuestionColumn, StyledButton, StyledRow } from './CreateQuestionStyle'
 
 // constants 
 import { API_BASE_URL, ACCESS_TOKEN } from '../../../constants'
@@ -68,8 +68,10 @@ class CreateQuestion extends Component {
               onChange={this.handleChange.bind(this)}
             />
           </StyledFormGroup>
-
-          <StyledButton>Submit</StyledButton>
+          <StyledRow>
+            <StyledButton>Cancel</StyledButton>
+            <Button tag="input">Submit</Button>
+          </StyledRow>
         </QuestionColumn>
 
       </Form>

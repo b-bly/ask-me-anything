@@ -20,3 +20,8 @@ export const QuestionContainer = styled.div `
 export const StyledButton = styled(Button) `
   align-self: flex-end;
 `
+export const StyledRow = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+`
