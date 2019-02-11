@@ -1,6 +1,6 @@
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
-const request = (options) => {
+const request = async (options) => {
   const headers = new Headers({
     'Content-Type': 'application/json',
   })
@@ -12,18 +12,26 @@ const request = (options) => {
   const defaults = { headers: headers };
   options = Object.assign({}, defaults, options);
 
-  return fetch(options.url, options)
+   
+  const result = await fetch(options.url, options)
     .then(response =>
       response.json().then(json => {
         return json;
       })
     );
+  return result
 };
 
 // Question methods
 
-export function createQuestion(questionRequest) {
-  return request()
+export async function createQuestion(questionRequest) {
+
+  const theRequest = await request({
+    url: API_BASE_URL + "/question",
+    method: 'POST',
+    body: JSON.stringify(questionRequest)
+  })
+  return theRequest
 }
 
 // Auth methods

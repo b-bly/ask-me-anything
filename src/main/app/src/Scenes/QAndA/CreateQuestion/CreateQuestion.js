@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Button, Form, Label, Input } from 'reactstrap';
 import { StyledFormGroup, QuestionColumn, StyledButton, StyledRow } from './CreateQuestionStyle'
 
+// functions
+import { createQuestion } from '../../../util/APIUtils'
 // constants 
 import { API_BASE_URL, ACCESS_TOKEN } from '../../../constants'
 
@@ -23,35 +25,10 @@ class CreateQuestion extends Component {
   handleSubmit = async (event) => {
     event.preventDefault()
     // post to api
-    let options = {
-      url: API_BASE_URL + "/question",
-      method: 'POST',
-      body: JSON.stringify(this.state)
+    const question = {
+      questionText: this.state.questionText
     }
-
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-    })
-
-    // add token
-    if (localStorage.getItem(ACCESS_TOKEN)) {
-      headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
-    }
-
-    const defaults = { headers: headers };
-    options = Object.assign({}, defaults, options);
-
-    try {
-      const response = await fetch(options.url, options)
-        .then(response =>
-          response.json().then(json => {
-            return json;
-          })
-        );
-    } catch (error) {
-      console.log(error);
-
-    }
+    const result = await createQuestion(question)
   }
 
   render() {
@@ -70,7 +47,7 @@ class CreateQuestion extends Component {
           </StyledFormGroup>
           <StyledRow>
             <StyledButton>Cancel</StyledButton>
-            <Button tag="input">Submit</Button>
+            <Button type="submit">Submit</Button>
           </StyledRow>
         </QuestionColumn>
 
