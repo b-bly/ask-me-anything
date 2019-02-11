@@ -1,5 +1,9 @@
 package com.example.ask.service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.ask.model.Question;
 import com.example.ask.model.User;
 import com.example.ask.payload.QuestionRequest;
+import com.example.ask.payload.QuestionResponse;
 import com.example.ask.repository.QuestionRepository;
 import com.example.ask.repository.UserRepository;
 import com.example.ask.security.UserPrincipal;
@@ -34,4 +39,16 @@ public class QuestionService {
         // save question
         return questionRepository.save(question);
 	}    
+	
+	public List<?> getAllQuestions() {
+		List<?> questions = questionRepository.findAll();
+		
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<QuestionResponse> questionResponse = (questions).stream().map(question -> {
+			return new QuestionResponse(((Question) question).getQuestionText(), ((Question) question).getUser().getUsername());
+		}).collect(Collectors.toList());
+		
+		
+		return questionResponse;
+	}
 }

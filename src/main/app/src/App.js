@@ -5,7 +5,7 @@ import { withRouter, Switch, Route } from 'react-router-dom'
 import { getCurrentUser } from './util/APIUtils'
 
 // constants
-import { ACCESS_TOKEN } from './constants'
+import { ACCESS_TOKEN, API_BASE_URL } from './constants'
 
 // Components
 import Home from './Scenes/Home'
@@ -47,6 +47,8 @@ class App extends Component {
 
   componentDidMount() {
     this.loadCurrentUser();
+    this.getAllQuestions();
+
   }
 
   handleLogin = () => {
@@ -70,6 +72,42 @@ class App extends Component {
     });
 
     this.props.history.push(redirectTo);
+  }
+
+  getAllQuestions = async () => {
+
+    // post to api
+    let options = {
+      url: API_BASE_URL + "/question",
+      method: 'GET'
+    }
+
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+    })
+
+    // add token
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
+    }
+
+    const defaults = { headers: headers };
+    options = Object.assign({}, defaults, options);
+
+    try {
+      const response = await fetch(options.url, options)
+        .then(response =>
+          response.json().then(json => {
+            return json;
+          })
+        );
+        console.log('questions: ');
+        
+        console.log(response);
+        
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
