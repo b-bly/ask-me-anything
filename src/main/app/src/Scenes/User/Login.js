@@ -3,17 +3,7 @@ import { login } from '../../util/APIUtils';
 import './Login.css'
 import { ACCESS_TOKEN } from '../../constants'
 
-import { Button, Card, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-
-
-const formStyle = {
-  display: 'flex',
-  flexFlow: 'column nowrap',
-}
-
-const formButtonStyle = {
-  
-}
+import { Card, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Login extends Component {
   constructor(props) {

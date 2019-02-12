@@ -3,6 +3,7 @@ package com.example.ask.payload;
 import java.util.List;
 
 public class QuestionResponse<T> {
+	private Long id;
 	private String question;
 	private String username;
 	
@@ -10,7 +11,8 @@ public class QuestionResponse<T> {
 		
 	}
 	
-	public QuestionResponse(String question, String username) {
+	public QuestionResponse(Long id, String question, String username) {
+		this.id = id;
 		this.question = question;
 		this.username = username;
 	}
@@ -25,6 +27,14 @@ public class QuestionResponse<T> {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

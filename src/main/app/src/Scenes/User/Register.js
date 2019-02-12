@@ -2,17 +2,7 @@ import React, { Component } from 'react';
 import { signup } from '../../util/APIUtils';
 import './Login.css'
 
-import { Button, Card, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-
-
-const formStyle = {
-  display: 'flex',
-  flexFlow: 'column nowrap',
-}
-
-const formButtonStyle = {
-
-}
+import { Card, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class Register extends Component {
   constructor(props) {

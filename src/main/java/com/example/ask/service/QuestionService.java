@@ -45,10 +45,9 @@ public class QuestionService {
 		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<QuestionResponse> questionResponse = (questions).stream().map(question -> {
-			return new QuestionResponse(((Question) question).getQuestionText(), ((Question) question).getUser().getUsername());
+			return new QuestionResponse(((Question) question).getId(), ((Question) question).getQuestionText(), ((Question) question).getUser().getUsername());
 		}).collect(Collectors.toList());
-		
-		
+		System.out.println("questionResponse: " + questionResponse);
 		return questionResponse;
 	}
 }

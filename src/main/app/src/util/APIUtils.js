@@ -24,15 +24,21 @@ const request = async (options) => {
     return result
   } catch (error) {
     console.log('error in request');
-    
     console.log(error);
-    
-    return {}
-
+    return {error: error}
   }
 };
 
 // Question methods
+
+export const editQuestion = async (questionRequest) => {
+  const result = await request({
+    url: API_BASE_URL + "/question",
+    method: 'PUT',
+    body: JSON.stringify(questionRequest)
+  })
+  return result
+}
 
 export const getQuestions = async () => {
   const result = await request({

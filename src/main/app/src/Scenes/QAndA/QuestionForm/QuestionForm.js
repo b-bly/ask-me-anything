@@ -1,18 +1,14 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
+
 // Style
 import { Button, Form, Label, Input } from 'reactstrap';
 import { StyledFormGroup, QuestionColumn, StyledButton, StyledRow } from './CreateQuestionStyle'
 
-// functions
-import { createQuestion } from '../../../util/APIUtils'
-// constants 
-import { API_BASE_URL, ACCESS_TOKEN } from '../../../constants'
-
-class CreateQuestion extends Component {
+class QuestionForm extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-
+      questionText: ''
     }
   }
 
@@ -22,38 +18,39 @@ class CreateQuestion extends Component {
     })
   }
 
-  handleSubmit = async (event) => {
-    event.preventDefault()
-    // post to api
-    const question = {
-      questionText: this.state.questionText
-    }
-    const result = await createQuestion(question)
+  handleSubmit(e) {
+    e.preventDefault()
+    this.props.handleSubmit(this.state);
   }
 
   render() {
+
+    const questionText = this.props.question
+
+    console.log(this.props);
+
     return (
       <Form onSubmit={this.handleSubmit.bind(this)}>
         <QuestionColumn>
-
           <StyledFormGroup>
             <Label for="questionText">Post a question</Label>
             <Input
               type="textarea"
               name="questionText"
               placeholder="Type your question..."
+              defaultValue={questionText}
+              value={this.state.questionText}
               onChange={this.handleChange.bind(this)}
             />
           </StyledFormGroup>
           <StyledRow>
-            <StyledButton>Cancel</StyledButton>
+            <StyledButton onClick={this.props.cancel}>Cancel</StyledButton>
             <Button type="submit">Submit</Button>
           </StyledRow>
         </QuestionColumn>
-
       </Form>
     )
   }
 }
 
-export default CreateQuestion
+export default QuestionForm

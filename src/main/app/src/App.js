@@ -5,13 +5,21 @@ import { withRouter, Switch, Route } from 'react-router-dom'
 import { getCurrentUser } from './util/APIUtils'
 
 // constants
-import { ACCESS_TOKEN, API_BASE_URL } from './constants'
+import { ACCESS_TOKEN } from './constants'
 
 // Components
 import Home from './Scenes/Home'
 import Login from './Scenes/User/Login'
 import Register from './Scenes/User/Register'
-import CreateQuestion from './Scenes/QAndA/CreateQuestion/CreateQuestion'
+import CreateQuestion from './Scenes/QAndA/QuestionForm/CreateQuestion'
+import EditQuestion from './Scenes/QAndA/QuestionForm/EditQuestion'
+
+// Font Awesome
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTrash, faPencilAlt, faStroopwafel, faEdit, faCheck, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTrash, faPencilAlt, faStroopwafel, faEdit, faCheck, faExternalLinkAlt)
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +31,7 @@ class App extends Component {
     }
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
   }
-  
+
   componentDidMount() {
     this.loadCurrentUser();
   }
@@ -104,6 +112,10 @@ class App extends Component {
           <Route
             path="/new-question"
             render={() => <CreateQuestion />}>
+          </Route>
+          <Route
+            path="/edit-question"
+            render={() => <EditQuestion />}>
           </Route>
         </Switch>
       </div>
