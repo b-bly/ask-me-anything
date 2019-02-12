@@ -13,7 +13,7 @@ const Question = (props) => {
     <StyledCard>
       <CardBody>
         <StyledCardSubtitle>
-          Author: jack
+          Author: {props.username}
         </StyledCardSubtitle>
         <CardText>
           Question: {props.question}

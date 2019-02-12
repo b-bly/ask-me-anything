@@ -12,17 +12,35 @@ const request = async (options) => {
   const defaults = { headers: headers };
   options = Object.assign({}, defaults, options);
 
-   
-  const result = await fetch(options.url, options)
-    .then(response =>
-      response.json().then(json => {
-        return json;
-      })
-    );
-  return result
+  try {
+    const result = await fetch(options.url, options)
+      .then(response =>
+        response.json().then(json => {
+          return json;
+        })
+      );
+      console.log('result');
+      console.log(result)
+    return result
+  } catch (error) {
+    console.log('error in request');
+    
+    console.log(error);
+    
+    return {}
+
+  }
 };
 
 // Question methods
+
+export const getQuestions = async () => {
+  const result = await request({
+    url: API_BASE_URL + "/question",
+    method: 'GET',
+  })
+  return result
+}
 
 export async function createQuestion(questionRequest) {
 

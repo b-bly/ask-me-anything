@@ -23,6 +23,10 @@ class App extends Component {
     }
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
   }
+  
+  componentDidMount() {
+    this.loadCurrentUser();
+  }
 
   loadCurrentUser() {
     console.log('loading current user');
@@ -43,12 +47,6 @@ class App extends Component {
           isLoading: false
         });
       });
-  }
-
-  componentDidMount() {
-    this.loadCurrentUser();
-    this.getAllQuestions();
-
   }
 
   handleLogin = () => {
@@ -72,42 +70,6 @@ class App extends Component {
     });
 
     this.props.history.push(redirectTo);
-  }
-
-  getAllQuestions = async () => {
-
-    // post to api
-    let options = {
-      url: API_BASE_URL + "/question",
-      method: 'GET'
-    }
-
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-    })
-
-    // add token
-    if (localStorage.getItem(ACCESS_TOKEN)) {
-      headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
-    }
-
-    const defaults = { headers: headers };
-    options = Object.assign({}, defaults, options);
-
-    try {
-      const response = await fetch(options.url, options)
-        .then(response =>
-          response.json().then(json => {
-            return json;
-          })
-        );
-        console.log('questions: ');
-        
-        console.log(response);
-        
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   render() {

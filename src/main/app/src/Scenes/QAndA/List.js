@@ -2,37 +2,51 @@ import React, { Component, Fragment } from 'react'
 
 // Components
 import Questions from './Questions'
-import Question from './Question'
+import { getQuestions } from './../../util/APIUtils'
 
 class List extends Component {
   constructor(props) {
     super(props)
-
+    this.state = {
+      questions: null
+    }
   }
 
   componentDidMount() {
+    this.getQuestionsCall()
+  }
+
+  getQuestionsCall = async () => {
+    const questions = await getQuestions()
+    console.log(questions);
     
+    this.setState({
+      questions: questions
+    })
   }
 
   render() {
-    const questions = ['What?', 'When?', 'Where?', 'How?', 'Who?']
+
     return (
       <div>
-        <Questions questions={questions}>
+        {this.state.questions !== null && (
+        <Questions questions={this.state.questions}>
           
        {/* Any props that are passed to children in the Parent Questions component go in the
        () on the next line and then can be used as props in child Question or other 
        components */}
        
           {() => (
-            questions.map((question, i) =>
+            this.state.questions.map((question, i) =>
               <Fragment key={i.toString()}>
-                <Questions.Question question={question} />
+                <Questions.Question question={question.question} 
+                  username={question.username}/>
               </Fragment>
             )
           )}
 
         </Questions>
+        )}
         {/* show questions */}
       </div>
     )

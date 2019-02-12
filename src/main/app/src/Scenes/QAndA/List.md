@@ -16,14 +16,14 @@ class List extends Component {
       <div>
         <Questions questions={questions}>
 
-       {/* Any props that are passed to children in the Parent Questions component go in the
+       {/* Any props that are passed to children in the Parent Questions component (not List) go in the
        () on the next line and then can be used as props in child Question or other 
        components */}
        
           {(example) => (
             questions.map((question, i) =>
               <Fragment key={i.toString()}>
-                <Questions.Question question={question} />
+                <Questions.Question question={question} exmaple={example}/>
               </Fragment>
             )
           )}
