@@ -31,6 +31,14 @@ const request = async (options) => {
 
 // Question methods
 
+export const deleteQuestion = async (questionId) => {
+  const result = await request({
+    url: API_BASE_URL + "/question",
+    method: 'DELETE'
+  })
+  return result
+}
+
 export const editQuestion = async (questionRequest) => {
   const result = await request({
     url: API_BASE_URL + "/question",

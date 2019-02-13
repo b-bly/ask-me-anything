@@ -25,7 +25,7 @@ const Question = (props) => {
     // redirect to /edit-question and pass question data
     props.editQuestion(props.question)
   }
-  const deleteQuestion = () => {
+  const deleteQuestion = () => {    
     props.deleteQuestion(props.question.questionId)
   }
   

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import { getQuestions } from './../../util/APIUtils'
+import { getQuestions, deleteQuestion } from '../../../util/APIUtils'
 
 class List extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class List extends Component {
       resolvedSuccess: false,
       questions: '',
       error: '',
+      message: '',
     };
   }
 
@@ -27,7 +28,7 @@ class List extends Component {
       if (data.error) {
         this.setState({
           resolvedError: true,
-          error: data.error.message
+          error: data.error
         })
       } else {
         this.setState({
@@ -55,8 +56,31 @@ class List extends Component {
     })
   }
 
-  deleteQuestion = (username) => {
+  deleteQuestion = async (questionId) => {
+    console.log('delete clicked');
 
+    let data = {}
+    try {
+      data = await deleteQuestion(questionId)
+      
+      if (data.error) {
+        
+        this.setState({
+          message: data.error
+        })
+      } else {
+        let updatedQuestions = this.state.questions.filter((question) => {
+          if (question.id === questionId) return false
+          return true
+        })
+        this.setState({
+          message: 'Deleted successfully',
+          // questions: updatedQuestions
+        })
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -85,7 +109,14 @@ class List extends Component {
       return <h1>{this.state.error}</h1>
     } else if (this.state.resolvedSuccess) {
 
-      return questions
+      return (
+        <Fragment>
+          {this.state.message && (
+            <p style={{color: 'red'}}>{this.state.message}</p>
+          )}
+          {questions}
+        </Fragment>
+      )
     } else {
       return <h1>Loading...</h1>
     }
