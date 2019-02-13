@@ -26,7 +26,7 @@ const Question = (props) => {
     props.editQuestion(props.question)
   }
   const deleteQuestion = () => {    
-    props.deleteQuestion(props.question.questionId)
+    props.deleteQuestion(props.question.id)
   }
   
   return (

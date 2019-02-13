@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.example.ask.model.Question;
 import com.example.ask.payload.ApiResponse;
 import com.example.ask.payload.QuestionRequest;
 import com.example.ask.payload.QuestionUpdateRequest;
+import com.example.ask.repository.QuestionRepository;
 import com.example.ask.repository.UserRepository;
 import com.example.ask.security.CurrentUser;
 import com.example.ask.security.UserPrincipal;
@@ -27,35 +30,53 @@ import com.example.ask.service.QuestionService;
 public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
-	
+
+	@Autowired
+	private QuestionRepository questionRepository;
+
 	@Autowired
 	private UserRepository userRepository;
-	
-	@PostMapping
-	public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest questionRequest, @CurrentUser UserPrincipal currentUser) {
-		System.out.println(
-				"Question post");
-		Question question = questionService.createQuestion(questionRequest, currentUser);
-		
-		 URI location = ServletUriComponentsBuilder
-	                .fromCurrentRequest().path("/{questionId}")
-	                .buildAndExpand(question.getId()).toUri();
 
-		 return ResponseEntity.created(location) // 201
-	                .body(new ApiResponse(true, "Question Created Successfully"));
+	@PostMapping
+	public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest questionRequest,
+			@CurrentUser UserPrincipal currentUser) {
+		System.out.println("Question post");
+		Question question = questionService.createQuestion(questionRequest, currentUser);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{questionId}")
+				.buildAndExpand(question.getId()).toUri();
+
+		return ResponseEntity.created(location) // 201
+				.body(new ApiResponse(true, "Question Created Successfully"));
 	}
-	
+
 	@GetMapping
 	public List<?> getAllQuestions() {
 		return questionService.getAllQuestions();
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<?> updateQuestion(@RequestBody QuestionUpdateRequest questionUpdateRequest, @CurrentUser UserPrincipal currentUser) {
+	public ResponseEntity<?> updateQuestion(@RequestBody QuestionUpdateRequest questionUpdateRequest,
+			@CurrentUser UserPrincipal currentUser) {
 		questionService.updateQuestion(questionUpdateRequest, currentUser);
 
-		 return ResponseEntity.ok()
-	                .body(new ApiResponse(true, "Question updated successfully"));
-		
+		return ResponseEntity.ok().body(new ApiResponse(true, "Question updated successfully"));
+
+	}
+
+	@DeleteMapping("/{questionId}")
+	public ResponseEntity<?> deleteQuestion(@PathVariable(value = "questionId") Long questionId,
+			@CurrentUser UserPrincipal currentUser) {
+		System.out.println("delete questionId: " + questionId);
+
+		Question question = questionRepository.getOne(questionId);
+		Long authorId = question.getUser().getId();
+		if (authorId != currentUser.getId()) {
+			return ResponseEntity.ok().body(new ApiResponse(true, "Not authorized"));
+		} else {
+
+			questionService.deleteQuestion(questionId);
+			return ResponseEntity.ok().body(new ApiResponse(true, "Question deleted successfully"));
+		}
 	}
 }

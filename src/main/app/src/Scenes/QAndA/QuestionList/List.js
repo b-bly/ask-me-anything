@@ -57,17 +57,16 @@ class List extends Component {
   }
 
   deleteQuestion = async (questionId) => {
-    console.log('delete clicked');
-
     let data = {}
     try {
       data = await deleteQuestion(questionId)
       
       if (data.error) {
+        console.log(data.error);
         
-        this.setState({
-          message: data.error
-        })
+        // this.setState({
+        //   message: data.error
+        // })
       } else {
         let updatedQuestions = this.state.questions.filter((question) => {
           if (question.id === questionId) return false
@@ -75,7 +74,7 @@ class List extends Component {
         })
         this.setState({
           message: 'Deleted successfully',
-          // questions: updatedQuestions
+          questions: updatedQuestions
         })
       }
     } catch (error) {
