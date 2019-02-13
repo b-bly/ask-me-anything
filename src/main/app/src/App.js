@@ -11,8 +11,7 @@ import { ACCESS_TOKEN } from './constants'
 import Home from './Scenes/Home'
 import Login from './Scenes/User/Login'
 import Register from './Scenes/User/Register'
-import CreateQuestion from './Scenes/QAndA/QuestionForm/CreateQuestion'
-import EditQuestion from './Scenes/QAndA/QuestionForm/EditQuestion'
+import QuestionFormContainer from './Scenes/QAndA/QuestionForm/QuestionFormContainer'
 
 // Font Awesome
 
@@ -100,22 +99,22 @@ class App extends Component {
         {/* <CreateQuestion /> */}
         <Switch>
           <Route exact path="/"
-            render={(props) => <Home />}>
+            render={() => <Home />}>
           </Route>
 
           <Route path="/client/login"
             render={(props) => <Login onLogin={this.handleLogin.bind(this)} {...props} />}>
           </Route>
           <Route path="/register"
-            render={(props) => <Register onRegister={this.handleRegister.bind(this)} />}>
+            render={() => <Register onRegister={this.handleRegister.bind(this)} />}>
           </Route>
           <Route
             path="/new-question"
-            render={() => <CreateQuestion />}>
+            render={() => <QuestionFormContainer />}>
           </Route>
           <Route
             path="/edit-question"
-            render={() => <EditQuestion />}>
+            render={() => <QuestionFormContainer />}>
           </Route>
         </Switch>
       </div>

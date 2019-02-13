@@ -36,7 +36,7 @@ const Question = (props) => {
           Author: {props.question.username}
         </StyledCardSubtitle>
         <CardText>
-          Question: {props.question.question}
+          Question: {props.question.questionText}
         </CardText>
         <Row>
           <IconButton 

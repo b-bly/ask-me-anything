@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 
 // Style
 import { Button, Form, Label, Input } from 'reactstrap';
-import { StyledFormGroup, QuestionColumn, StyledButton, StyledRow } from './CreateQuestionStyle'
+import { StyledFormGroup, QuestionColumn, StyledButton, StyledRow } from './QuestionFormStyle'
 
-class QuestionForm extends PureComponent {
+class QuestionForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      questionText: ''
+      questionText: this.props.questionText ? this.props.questionText : ''
     }
   }
 
@@ -24,9 +24,7 @@ class QuestionForm extends PureComponent {
   }
 
   render() {
-
-    const questionText = this.props.question
-
+    const questionText = this.props.questionText
     console.log(this.props);
 
     return (
@@ -38,7 +36,6 @@ class QuestionForm extends PureComponent {
               type="textarea"
               name="questionText"
               placeholder="Type your question..."
-              defaultValue={questionText}
               value={this.state.questionText}
               onChange={this.handleChange.bind(this)}
             />

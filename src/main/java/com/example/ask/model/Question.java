@@ -36,6 +36,10 @@ public class Question {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getQuestionText() {
 		return questionText;
 	}

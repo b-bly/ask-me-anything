@@ -4,23 +4,23 @@ import java.util.List;
 
 public class QuestionResponse<T> {
 	private Long id;
-	private String question;
+	private String questionText;
 	private String username;
 	
 	public QuestionResponse() {
 		
 	}
 	
-	public QuestionResponse(Long id, String question, String username) {
+	public QuestionResponse(Long id, String questionText, String username) {
 		this.id = id;
-		this.question = question;
+		this.questionText = questionText;
 		this.username = username;
 	}
-	public String getQuestion() {
-		return question;
+	public String getQuestionText() {
+		return questionText;
 	}
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setQuestionText(String questionText) {
+		this.questionText = questionText;
 	}
 	public String getUsername() {
 		return username;

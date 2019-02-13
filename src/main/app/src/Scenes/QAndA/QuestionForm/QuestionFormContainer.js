@@ -4,6 +4,9 @@ import { withRouter, Redirect } from 'react-router-dom'
 // components
 import QuestionForm from './QuestionForm'
 
+// functions
+import { createQuestion, editQuestion } from '../../../util/APIUtils'
+
 class CreateQuestion extends Component {
   constructor(props) {
     super(props)
@@ -11,15 +14,29 @@ class CreateQuestion extends Component {
       submitClicked: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
-
   }
 
   handleSubmit = async (question) => {
     let updatedQuestion = {}
-    // const mode = this.props.location.pathname.search(/edit/) === -1 ? 'add' : 'edit';
+    const mode = this.props.location.pathname.search(/edit/) === -1 ? 'add' : 'edit';
     // add question id and username if edit
 
-    this.props.finalSubmit(question)
+    let result
+    if (mode === 'add') {
+      result = await createQuestion(question)
+    } else {
+      updatedQuestion.id = this.props.location.state.questionObj.id
+      updatedQuestion.questionText = question.questionText
+      result = await editQuestion(updatedQuestion)
+    }
+    // add error handling
+    if (result.error) {
+      console.log(result.error);
+    }
+
+    this.setState({
+      redirectTo: '/'
+    })
   }
 
   cancel = (e) => {
@@ -30,17 +47,27 @@ class CreateQuestion extends Component {
   }
 
 
-
-  static QuestionForm = QuestionForm
+  getQuestion = () => {
+    // for editing a question, return the question text.
+    // Otherwise return an empty string (for the add question page)
+    // This will be the default value for the form in QuestionForm
+    let question = '';
+    if (this.props.location) {
+      if (this.props.location.state) {
+        question = this.props.location.state.questionObj
+      }
+      return question.questionText
+    }
+    return ''
+  }
 
   render() {
-    const { handleSubmit, cancel } = this
-
     console.log('props');
     console.log(this.props)
     const questionListRedirectObj = {
       pathname: '/'
     }
+    const questionText = this.getQuestion()
     // console.log('this.props', this.props)
 
     // To do: add error handling
@@ -51,8 +78,10 @@ class CreateQuestion extends Component {
     } else {
       return (
         <Fragment>
-          {this.props.children(handleSubmit, cancel)}
-
+          <QuestionForm
+            handleSubmit={this.handleSubmit.bind(this)}
+            cancel={this.cancel.bind(this)}
+            questionText={questionText} />
         </Fragment>
       )
     }

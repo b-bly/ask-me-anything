@@ -19,6 +19,7 @@ export const QuestionContainer = styled.div `
 
 export const StyledButton = styled(Button) `
   align-self: flex-end;
+  margin: 0 5px;
 `
 export const StyledRow = styled.div`
   display: flex;
