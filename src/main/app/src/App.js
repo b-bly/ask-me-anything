@@ -3,7 +3,6 @@ import './App.css';
 import { withRouter, Switch, Route } from 'react-router-dom'
 // Request methods
 import { getCurrentUser } from './util/APIUtils'
-
 // constants
 import { ACCESS_TOKEN } from './constants'
 
@@ -12,9 +11,9 @@ import Home from './Scenes/Home'
 import Login from './Scenes/User/Login'
 import Register from './Scenes/User/Register'
 import QuestionFormContainer from './Scenes/QAndA/QuestionForm/QuestionFormContainer'
+import Nav from './Scenes/Nav/NavBar'
 
 // Font Awesome
-
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash, faPencilAlt, faStroopwafel, faEdit, faCheck, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,7 +23,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: '',
+      currentUser: null,
       isAuthenticated: false,
       isLoading: false,
     }
@@ -62,10 +61,9 @@ class App extends Component {
   }
 
   handleRegister = (registerObj) => {
-    console.log(registerObj)
-
     this.props.history.push('/client/login')
   }
+
 
   handleLogout(redirectTo = "/", notificationType = "success", description = "You're successfully logged out.") {
     localStorage.removeItem(ACCESS_TOKEN);
@@ -82,26 +80,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          React Hello Boot
-        </header>
+        <Nav loadCurrentUser={this.loadCurrentUser.bind(this)}
+          handleLogout={this.handleLogout.bind(this)}
+          currentUser={this.state.currentUser}/>
+          <div className="hr"></div>
         {this.state.currentUser &&
           <div>Current user: {this.state.currentUser.name}</div>
         }
-        <a href="/client/login">Login</a>
-        <a href="/register">Register</a>
 
-        <button
-          onClick={this.handleLogout.bind(this)}
-        >Logout</button>
-
-
-        {/* <CreateQuestion /> */}
         <Switch>
           <Route exact path="/"
             render={() => <Home />}>
           </Route>
-
           <Route path="/client/login"
             render={(props) => <Login onLogin={this.handleLogin.bind(this)} {...props} />}>
           </Route>

@@ -50,7 +50,7 @@ class Login extends Component {
     return (
       <div className="container">
         <Card className="card-login">
-        <p>Login:</p>
+        <p>Login</p>
           <Form className="login-form" onSubmit={this.handleSubmit}>
             <FormGroup >
               <Label>

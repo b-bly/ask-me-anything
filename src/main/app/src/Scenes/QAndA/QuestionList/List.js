@@ -57,28 +57,30 @@ class List extends Component {
   }
 
   deleteQuestion = async (questionId) => {
-    let data = {}
-    try {
-      data = await deleteQuestion(questionId)
-      
-      if (data.error) {
-        console.log(data.error);
-        
-        // this.setState({
-        //   message: data.error
-        // })
-      } else {
-        let updatedQuestions = this.state.questions.filter((question) => {
-          if (question.id === questionId) return false
-          return true
-        })
-        this.setState({
-          message: 'Deleted successfully',
-          questions: updatedQuestions
-        })
+    const userPermission = window.confirm("Are you sure you want to delete this?")
+    if (userPermission) {
+      let data = {}
+      try {
+        data = await deleteQuestion(questionId)
+
+        if (data.error) {
+
+          this.setState({
+            message: JSON.stringify(data.error)
+          })
+        } else {
+          let updatedQuestions = this.state.questions.filter((question) => {
+            if (question.id === questionId) return false
+            return true
+          })
+          this.setState({
+            message: 'Deleted successfully',
+            questions: updatedQuestions
+          })
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   }
 
@@ -111,7 +113,7 @@ class List extends Component {
       return (
         <Fragment>
           {this.state.message && (
-            <p style={{color: 'red'}}>{this.state.message}</p>
+            <p style={{ color: 'red' }}>{this.state.message}</p>
           )}
           {questions}
         </Fragment>

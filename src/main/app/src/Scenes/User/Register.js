@@ -42,7 +42,7 @@ class Register extends Component {
     return (
       <div className="container">
         <Card className="card-login">
-          <p>Sign up:</p>
+          <p>Register</p>
           <Form className="login-form" onSubmit={this.handleSubmit}>
             <FormGroup >
               <Label>
