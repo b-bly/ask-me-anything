@@ -14,6 +14,7 @@ class List extends Component {
       questions: '',
       error: '',
       message: '',
+      showAnswerForm: false,
     };
   }
 
@@ -26,9 +27,11 @@ class List extends Component {
     try {
       data = await getQuestions()
       if (data.error) {
+        console.log(data.error);
+        
         this.setState({
           resolvedError: true,
-          error: data.error
+          error: data.error.error
         })
       } else {
         this.setState({
@@ -45,10 +48,15 @@ class List extends Component {
   }
 
   editQuestion = (questionObj) => {
+    const payload = {
+      defaultValue: questionObj.questionText,
+      id: questionObj.id
+    }
+
     const redirectObj = {
       pathname: '/edit-question/?question_id=' + questionObj.id,
       state: {
-        questionObj: questionObj
+        payload: payload
       }
     }
     this.setState({
@@ -84,6 +92,13 @@ class List extends Component {
     }
   }
 
+  createAnswer = (questionId) => {
+    console.log(questionId)
+    this.setState({
+      showAnswerForm: questionId
+    })
+  }
+
   render() {
     const questions = <Questions questions={this.state.questions}>
 
@@ -94,9 +109,12 @@ class List extends Component {
         this.state.questions.map((question, i) =>
           <Fragment key={i.toString()}>
             <Questions.Question question={question}
-
+              showAnswerForm={this.state.showAnswerForm}
               editQuestion={this.editQuestion.bind(this)}
               deleteQuestion={this.deleteQuestion.bind(this)} />
+            {/* {this.state.showAnswerForm === question.id && (
+              
+            )} */}
           </Fragment>
         )
       )}

@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 // Style
 import { StyledButton, Container, StyledRow } from './QuestionsStyle'
 
-
 //Components
 import Question from './Question'
 
-
+// functions
+import {createQuestion} from '../../../util/APIUtils'
 
 class Questions extends Component {
   constructor() {
@@ -21,7 +21,8 @@ class Questions extends Component {
       <Container>
         <StyledRow>
           <StyledButton
-            tag={Link} to="/new-question"
+            tag={Link}
+            to="/new-question"
             color="primary">New Question
           </StyledButton>
         </StyledRow>

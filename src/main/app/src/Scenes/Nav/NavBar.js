@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { NavItem, NavLink } from 'reactstrap';
+import { NavLink } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom'
 
 // style
-import { StyledLink, StyledNav, LeftNavItem, LeftSide, RightSide } from './NavStyle'
+import { StyledNavItem, StyledLink, StyledNav, LeftStyledNavItem, LeftSide, RightSide } from './NavStyle'
 
 class NavBar extends Component {
   constructor(props) {
@@ -19,40 +19,38 @@ class NavBar extends Component {
     const loginActive = this.props.location.pathname.indexOf("login") !== -1
     const registerActive = this.props.location.pathname.indexOf("register") !== -1
     const homeActive = this.props.location.pathname === '/'
-    console.log(loginActive, registerActive, homeActive);
-
 
     return (
       <StyledNav pills >
         <LeftSide>
           {this.props.currentUser === null && (
             <Fragment>
-              <NavItem>
+              <StyledNavItem>
                 <NavLink active={loginActive}
                   tag={Link}
                   to="/client/login">Login</NavLink>
-              </NavItem>
-              <NavItem>
+              </StyledNavItem>
+              <StyledNavItem>
                 <NavLink active={registerActive}
                   tag={Link}
                   to="/register">Register</NavLink>
-              </NavItem>
+              </StyledNavItem>
             </Fragment>
           )}
 
-          <NavItem>
+          <StyledNavItem>
             <NavLink active={homeActive}
               tag={Link}
               to="/">Home</NavLink>
-          </NavItem>
+          </StyledNavItem>
         </LeftSide>
 
         <RightSide>
           {this.props.currentUser !== null && (
-            <LeftNavItem>
+            <StyledNavItem>
               <StyledLink
                 onClick={this.props.handleLogout}>Logout</StyledLink>
-            </LeftNavItem>
+            </StyledNavItem>
           )}
         </RightSide>
       </StyledNav>

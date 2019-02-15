@@ -3,13 +3,19 @@ import styled from 'styled-components'
 
 export const StyledNav = styled(Nav) `
   width: 100%;
+  background-color: white;
 `
 
 export const StyledLink = styled(NavLink) `
   cursor: pointer;
 `
-export const LeftNavItem = styled(NavItem) `
+export const StyledNavItem = styled(NavItem) `
+  margin:5px;
+`
+
+export const LeftNavItem = styled(StyledNavItem) `
   justify-self: flex-end;
+  margin:5px;
 `
 
 export const LeftSide = styled.div `
@@ -23,3 +29,4 @@ export const RightSide = styled.div `
   display: flex;
   align-items: center;
 `
+

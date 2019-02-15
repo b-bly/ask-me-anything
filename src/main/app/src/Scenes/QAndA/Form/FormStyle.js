@@ -5,7 +5,7 @@ import { FormGroup, Button } from 'reactstrap'
 export const StyledFormGroup = styled(FormGroup) `
   width: 100%;
 `
-export const QuestionColumn = styled.div `
+export const FlexColumn = styled.div `
   display: flex;
   flex-direction: column;
   align-items: center;

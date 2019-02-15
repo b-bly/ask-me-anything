@@ -2,17 +2,24 @@ import React, { Component } from 'react'
 
 // Style
 import { Button, Form, Label, Input } from 'reactstrap';
-import { StyledFormGroup, QuestionColumn, StyledButton, StyledRow } from './QuestionFormStyle'
+import { StyledFormGroup, FlexColumn, StyledButton, StyledRow } from './FormStyle'
 
-class QuestionForm extends Component {
+class FormComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      questionText: this.props.questionText ? this.props.questionText : ''
+      [this.props.fieldName]: ''
+    }
+    if (this.props.payload) {
+      this.state = {
+        [this.props.fieldName]: this.props.payload.defaultValue ? this.props.payload.defaultValue : ''
+      }
     }
   }
 
   handleChange = (event) => {
+    console.log(this.state);
+    
     this.setState({
       [event.target.name]: event.target.value
     })
@@ -24,19 +31,18 @@ class QuestionForm extends Component {
   }
 
   render() {
-    const questionText = this.props.questionText
-    console.log(this.props);
-
+// props:
+// fieldName, payload.defaultValue, payload.id, labelText, placeholder
     return (
       <Form onSubmit={this.handleSubmit.bind(this)}>
-        <QuestionColumn>
+        <FlexColumn>
           <StyledFormGroup>
-            <Label for="questionText">Post a question</Label>
+            <Label for={this.props.fieldName}>{this.props.labelText}</Label>
             <Input
               type="textarea"
-              name="questionText"
-              placeholder="Type your question..."
-              value={this.state.questionText}
+              name={this.props.fieldName}
+              placeholder={this.props.placeholder}
+              value={this.state[this.props.fieldName]}
               onChange={this.handleChange.bind(this)}
             />
           </StyledFormGroup>
@@ -44,10 +50,10 @@ class QuestionForm extends Component {
             <StyledButton onClick={this.props.cancel}>Cancel</StyledButton>
             <Button type="submit">Submit</Button>
           </StyledRow>
-        </QuestionColumn>
+        </FlexColumn>
       </Form>
     )
   }
 }
 
-export default QuestionForm
+export default FormComponent

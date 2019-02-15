@@ -12,12 +12,40 @@ import Login from './Scenes/User/Login'
 import Register from './Scenes/User/Register'
 import QuestionFormContainer from './Scenes/QAndA/QuestionForm/QuestionFormContainer'
 import Nav from './Scenes/Nav/NavBar'
+import FormPropsContainer from './Scenes/QAndA/Form/FormPropsContainer'
+import FormContainer from './Scenes/QAndA/Form/FormContainer'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrash, faPencilAlt, faStroopwafel, faEdit, faCheck, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faReply } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faTrash, faPencilAlt, faStroopwafel, faEdit, faCheck, faExternalLinkAlt)
+// Functions
+import { createQuestion, editQuestion } from './util/APIUtils'
+
+library.add(faTrash, faEdit, faReply)
+
+const getFormPropsContainerDefaultProps = () => {
+  return {
+    fieldName: 'questionText',
+    payload: {
+      defaultValue: '',
+    },
+    labelText: 'New question:',
+    placeholder: 'Type your question',
+    mode: 'add',
+    submit: createQuestion
+  }
+}
+
+const getEditQuestionDefaultProps = () => {
+  return {
+    fieldName: 'questionText',
+    labelText: 'Edit your question',
+    placeholder: 'Type your question',
+    mode: 'edit',
+    submit: editQuestion,
+  }
+}
 
 class App extends Component {
   constructor(props) {
@@ -82,8 +110,8 @@ class App extends Component {
       <div className="App">
         <Nav loadCurrentUser={this.loadCurrentUser.bind(this)}
           handleLogout={this.handleLogout.bind(this)}
-          currentUser={this.state.currentUser}/>
-          <div className="hr"></div>
+          currentUser={this.state.currentUser} />
+
         {this.state.currentUser &&
           <div>Current user: {this.state.currentUser.name}</div>
         }
@@ -100,11 +128,17 @@ class App extends Component {
           </Route>
           <Route
             path="/new-question"
-            render={() => <QuestionFormContainer />}>
+            render={() => <FormContainer
+              {...getFormPropsContainerDefaultProps()}
+            />}>
           </Route>
+          {/* // fieldName, payload.defaultValue, payload.id, labelText, placeholder */}
+
           <Route
             path="/edit-question"
-            render={() => <QuestionFormContainer />}>
+            render={() => <FormPropsContainer
+              {...getEditQuestionDefaultProps()}
+            />}>
           </Route>
         </Switch>
       </div>

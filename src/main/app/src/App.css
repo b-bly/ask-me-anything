@@ -4,13 +4,6 @@
   height: 100vh;
 }
 
-
-.hr {
-  border: .5px solid gray;
-  margin: 5px 5px 5px 5px;
-  width: 100%;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

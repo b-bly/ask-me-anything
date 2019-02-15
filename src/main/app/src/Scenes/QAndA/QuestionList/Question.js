@@ -5,6 +5,7 @@ import {
   CardText, CardBody
 } from 'reactstrap';
 import { StyledCard, StyledCardSubtitle, Row, Icon } from './QuestionStyle'
+import {colors} from '../../../constants'
 
 const IconButton = (props) => {
   const action = (e) => {
@@ -19,7 +20,6 @@ const IconButton = (props) => {
   )
 }
 
-
 const Question = (props) => {
   const editQuestion = () => {
     // redirect to /edit-question and pass question data
@@ -27,6 +27,9 @@ const Question = (props) => {
   }
   const deleteQuestion = () => {    
     props.deleteQuestion(props.question.id)
+  }
+  const createAnswer = () => {
+    props.createAnswer(props.question.id)
   }
   
   return (
@@ -41,14 +44,18 @@ const Question = (props) => {
         <Row>
           <IconButton 
             icon="edit"
-            color="#868e96"
-           
+            color={colors.cyan}
             action={editQuestion}
           /> 
            <IconButton 
             icon="trash"
-            color="#868e96"
+            color={colors.red}
             action={deleteQuestion}
+          /> 
+            <IconButton 
+            icon="reply"
+            color={colors.gray600}
+            action={createAnswer}
           /> 
         </Row>
 
