@@ -29,6 +29,13 @@ const request = async (options) => {
   }
 };
 
+//Answer methods
+
+// placeholder
+export const createAnswer = () => {
+  return null
+}
+
 // Question methods
 
 export const deleteQuestion = async (questionId) => {  

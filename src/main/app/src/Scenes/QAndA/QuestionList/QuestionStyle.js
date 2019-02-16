@@ -19,6 +19,7 @@ export const Row = styled.div`
   flex-flow: row;
   justify-content: flex-start;
 `
+
 export const Icon = styled(FontAwesomeIcon)`
   color: ${props => props.color};
   margin: 'auto .5em';
