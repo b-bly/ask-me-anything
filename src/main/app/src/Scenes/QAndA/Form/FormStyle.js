@@ -11,6 +11,7 @@ export const FlexColumn = styled.div `
   align-items: center;
   margin: auto;
   max-width: 600px;
+  padding: 15px;
 `
 
 export const QuestionContainer = styled.div `

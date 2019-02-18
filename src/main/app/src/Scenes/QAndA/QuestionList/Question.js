@@ -7,7 +7,7 @@ import { IconButton } from '../../../Components/IconButton'
 import {
   CardText, CardBody
 } from 'reactstrap';
-import { StyledCard, StyledCardSubtitle, Row, Icon } from './QuestionStyle'
+import { StyledCard, StyledCardSubtitle, Row, StyledAnswerCard } from './QuestionStyle'
 import { colors } from '../../../constants'
 import FormContainer from '../Form/FormContainer';
 import { createAnswer } from '../../../util/APIUtils'
@@ -67,11 +67,11 @@ const Question = (props) => {
         </CardBody>
         {/* Answer form */}
       </StyledCard>
-      <StyledCard>
+      <StyledAnswerCard>
         <FormContainer
           {...getAnswerFormContainerDefaultProps()}
         />
-      </StyledCard>
+      </StyledAnswerCard>
     </Fragment>
   )
 }
