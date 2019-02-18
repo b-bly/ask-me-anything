@@ -21,6 +21,8 @@ const getAnswerFormContainerDefaultProps = () => {
     labelText: 'Your answer:',
     placeholder: 'Type your answer',
     mode: 'add',
+    margin: '0',
+    maxWidth:'auto',
     submit: createAnswer
   }
 }

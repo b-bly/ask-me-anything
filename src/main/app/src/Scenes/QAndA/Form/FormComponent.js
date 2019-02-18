@@ -35,7 +35,9 @@ class FormComponent extends Component {
 // fieldName, payload.defaultValue, payload.id, labelText, placeholder
     return (
       <Form onSubmit={this.handleSubmit.bind(this)}>
-        <FlexColumn>
+        <FlexColumn
+          margin={this.props.margin}
+          maxWidth={this.props.maxWidth}>
           <StyledFormGroup>
             <Label for={this.props.fieldName}>{this.props.labelText}</Label>
             <Input
@@ -48,7 +50,7 @@ class FormComponent extends Component {
           </StyledFormGroup>
           <StyledRow>
             <StyledButton onClick={this.props.cancel}>Cancel</StyledButton>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" color="success">Submit</Button>
           </StyledRow>
         </FlexColumn>
       </Form>
