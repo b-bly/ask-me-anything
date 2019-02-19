@@ -5,9 +5,6 @@ import FormContainer from './FormContainer';
 // Use this container only for passing data from this.props.location.state
 // Otherwise just use FormContainer directly
 class FormPropsContainer extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     console.log(this.props);

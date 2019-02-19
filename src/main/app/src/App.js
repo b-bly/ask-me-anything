@@ -62,14 +62,12 @@ class App extends Component {
   }
 
   loadCurrentUser() {
-    console.log('loading current user');
 
     this.setState({
       isLoading: true
     });
     getCurrentUser()
       .then(response => {
-        console.log(response)
         this.setState({
           currentUser: response,
           isAuthenticated: true,

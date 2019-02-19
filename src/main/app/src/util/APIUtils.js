@@ -19,8 +19,6 @@ const request = async (options) => {
           return json;
         })
       );
-      console.log('result');
-      console.log(result)
     return result
   } catch (error) {
     console.log('error in request');

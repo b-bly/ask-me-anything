@@ -14,7 +14,7 @@ class List extends Component {
       questions: '',
       error: '',
       message: '',
-      showAnswerForm: false,
+      showAnswerFormId: -1,
     };
   }
 
@@ -28,7 +28,7 @@ class List extends Component {
       data = await getQuestions()
       if (data.error) {
         console.log(data.error);
-        
+
         this.setState({
           resolvedError: true,
           error: data.error.error
@@ -92,33 +92,41 @@ class List extends Component {
     }
   }
 
-  createAnswer = (questionId) => {
-    console.log(questionId)
+  showAnswerForm = (questionId) => {
     this.setState({
-      showAnswerForm: questionId
+      showAnswerFormId: questionId
     })
   }
 
-  render() {
-    const questions = <Questions questions={this.state.questions}>
+  createAnswer = (data) => {
+    console.log('click');
+    
+  }
 
-      {/* Any props that are passed to children in the Parent Questions component go in the
+  render() {
+    const questions = (
+      <Questions questions={this.state.questions}>
+
+        {/* Any props that are passed to children in the Parent Questions component go in the
  () on the next line and then can be used as props in child Question or other 
  components */}
-      {() => (
-        this.state.questions.map((question, i) =>
-          <Fragment key={i.toString()}>
-            <Questions.Question question={question}
-              showAnswerForm={this.state.showAnswerForm}
-              editQuestion={this.editQuestion.bind(this)}
-              deleteQuestion={this.deleteQuestion.bind(this)} />
-            {/* {this.state.showAnswerForm === question.id && (
-              
-            )} */}
-          </Fragment>
-        )
-      )}
-    </Questions>
+        {() => (
+          this.state.questions.map((question, i) => {
+            const showAnswerFormBool = (this.state.showAnswerFormId === question.id)            
+            return (
+              <Fragment key={i.toString()}>
+                <Questions.Question question={question}
+                  showAnswerForm={this.showAnswerForm}
+                  editQuestion={this.editQuestion.bind(this)}
+                  deleteQuestion={this.deleteQuestion.bind(this)}
+                  showAnswerFormBool={showAnswerFormBool} />
+              </Fragment>
+            )
+          })
+        )}
+      </Questions>
+    ) 
+    // end questions def
 
     if (this.state.redirectTo) {
       return (

@@ -3,7 +3,7 @@ import { NavLink } from 'reactstrap';
 import { Link, withRouter } from 'react-router-dom'
 
 // style
-import { StyledNavItem, StyledLink, StyledNav, LeftStyledNavItem, LeftSide, RightSide } from './NavStyle'
+import { StyledNavItem, StyledLink, StyledNav, LeftSide, RightSide } from './NavStyle'
 
 class NavBar extends Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class NavBar extends Component {
 
 
   render() {
-    console.log(this.props);
     const loginActive = this.props.location.pathname.indexOf("login") !== -1
     const registerActive = this.props.location.pathname.indexOf("register") !== -1
     const homeActive = this.props.location.pathname === '/'

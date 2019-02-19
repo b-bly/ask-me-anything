@@ -22,7 +22,7 @@ const getAnswerFormContainerDefaultProps = () => {
     placeholder: 'Type your answer',
     mode: 'add',
     margin: '0',
-    maxWidth:'auto',
+    maxWidth: 'auto',
     submit: createAnswer
   }
 }
@@ -32,14 +32,14 @@ const Question = (props) => {
     // redirect to /edit-question and pass question data
     props.editQuestion(props.question)
   }
+  
   const deleteQuestion = () => {
     props.deleteQuestion(props.question.id)
   }
-  const createAnswer = () => {
-    props.createAnswer(props.question.id)
-  }
 
+  const showAnswerForm = () => props.showAnswerForm(props.question.id)
   return (
+
     <Fragment>
       <StyledCard>
         <CardBody>
@@ -63,17 +63,21 @@ const Question = (props) => {
             <IconButton
               icon="reply"
               color={colors.gray600}
-              action={createAnswer}
+              action={showAnswerForm}
             />
           </Row>
         </CardBody>
-        {/* Answer form */}
       </StyledCard>
-      <StyledAnswerCard>
-        <FormContainer
-          {...getAnswerFormContainerDefaultProps()}
-        />
-      </StyledAnswerCard>
+
+        {/* Answer form */}
+
+      {props.showAnswerFormBool === true && (
+        <StyledAnswerCard>
+          <FormContainer
+            {...getAnswerFormContainerDefaultProps()}
+          />
+        </StyledAnswerCard>
+      )}
     </Fragment>
   )
 }

@@ -7,13 +7,8 @@ import { StyledButton, Container, StyledRow } from './QuestionsStyle'
 //Components
 import Question from './Question'
 
-// functions
-import {createQuestion} from '../../../util/APIUtils'
-
 class Questions extends Component {
-  constructor() {
-    super()
-  }
+
   static Question = Question
 
   render() {
