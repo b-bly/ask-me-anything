@@ -11,40 +11,17 @@ import Home from './Scenes/Home'
 import Login from './Scenes/User/Login'
 import Register from './Scenes/User/Register'
 import Nav from './Scenes/Nav/NavBar'
-import FormPropsContainer from './Scenes/QAndA/Form/FormPropsContainer'
 import FormContainer from './Scenes/QAndA/Form/FormContainer'
+import FormPropsContainer from './Scenes/QAndA/Form/FormPropsContainer'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash, faEdit, faReply } from '@fortawesome/free-solid-svg-icons'
 
 // Functions
-import { createQuestion, editQuestion } from './util/APIUtils'
+import { editQuestion, getFormPropsContainerDefaultProps, getEditQuestionDefaultProps } from './Scenes/QAndA/QuestionForm/Util'
 
 library.add(faTrash, faEdit, faReply)
-
-const getFormPropsContainerDefaultProps = () => {
-  return {
-    fieldName: 'questionText',
-    payload: {
-      defaultValue: '',
-    },
-    labelText: 'New question:',
-    placeholder: 'Type your question',
-    mode: 'add',
-    submit: createQuestion
-  }
-}
-
-const getEditQuestionDefaultProps = () => {
-  return {
-    fieldName: 'questionText',
-    labelText: 'Edit your question',
-    placeholder: 'Type your question',
-    mode: 'edit',
-    submit: editQuestion,
-  }
-}
 
 class App extends Component {
   constructor(props) {

@@ -30,8 +30,13 @@ const request = async (options) => {
 //Answer methods
 
 // placeholder
-export const createAnswer = () => {
-  return null
+export const createAnswer = async (answer) => {
+  const result = await request({
+    url: API_BASE_URL + "/answer",
+    method: 'POST',
+    body: JSON.stringify(answer)
+  })
+  return result
 }
 
 // Question methods
@@ -44,7 +49,7 @@ export const deleteQuestion = async (questionId) => {
   return result
 }
 
-export const editQuestion = async (questionRequest) => {
+export const editQuestionRequest = async (questionRequest) => {
   const result = await request({
     url: API_BASE_URL + "/question",
     method: 'PUT',
@@ -61,7 +66,7 @@ export const getQuestions = async () => {
   return result
 }
 
-export async function createQuestion(questionRequest) {
+export const createQuestion = async (questionRequest) => {
 
   const theRequest = await request({
     url: API_BASE_URL + "/question",

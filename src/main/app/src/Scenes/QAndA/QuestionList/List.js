@@ -3,7 +3,12 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import { getQuestions, deleteQuestion } from '../../../util/APIUtils'
+import AnswerForm from './AnswerForm'
+import { getQuestions, deleteQuestion, createAnswer } from '../../../util/APIUtils'
+
+// Util
+import {getAnswerFormContainerDefaultProps} from '../AnswerForm/Util'
+
 
 class List extends Component {
   constructor(props) {
@@ -98,9 +103,19 @@ class List extends Component {
     })
   }
 
-  createAnswer = (data) => {
-    console.log('click');
-    
+  hideAnswerForm = () => {
+    this.setState({
+      showAnswerFormId: false
+    })
+  }
+
+  createAnswer = async (answer, questionId) => {
+    console.log(answer, questionId);
+    const payload = {
+      ...answer,
+      questionId: questionId
+    }
+    const data = await createAnswer(payload)
   }
 
   render() {
@@ -112,7 +127,7 @@ class List extends Component {
  components */}
         {() => (
           this.state.questions.map((question, i) => {
-            const showAnswerFormBool = (this.state.showAnswerFormId === question.id)            
+            const showAnswerFormBool = (this.state.showAnswerFormId === question.id)
             return (
               <Fragment key={i.toString()}>
                 <Questions.Question question={question}
@@ -120,12 +135,20 @@ class List extends Component {
                   editQuestion={this.editQuestion.bind(this)}
                   deleteQuestion={this.deleteQuestion.bind(this)}
                   showAnswerFormBool={showAnswerFormBool} />
+                {showAnswerFormBool === true && (
+                  <AnswerForm
+                    questionId={question.id}
+                    createAnswer={this.createAnswer.bind(this)}
+                    cancel={this.hideAnswerForm.bind(this)}
+                    {...getAnswerFormContainerDefaultProps()}
+                  />
+                )}
               </Fragment>
             )
           })
         )}
       </Questions>
-    ) 
+    )
     // end questions def
 
     if (this.state.redirectTo) {

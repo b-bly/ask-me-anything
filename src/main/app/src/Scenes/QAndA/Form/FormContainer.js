@@ -17,17 +17,12 @@ class CreateAnswer extends Component {
   }
 
   handleSubmit = async (payload) => {
-    let updatedPayload = {...payload}
-    const { mode } = this.props
-    // add answer id and username if edit
-    let result
-    if (mode === 'edit') {
-      updatedPayload.id = this.props.payload.id
-    }
-    result = await this.props.submit(updatedPayload)
+    const result = await this.props.submit(payload, this)
     // add error handling
-    if (result.error) {
-      console.log(result.error);
+    if (result) {
+      if (result.error) {
+        console.log(result.error);
+      }
     }
 
     this.setState({
@@ -37,9 +32,7 @@ class CreateAnswer extends Component {
 
   cancel = (e) => {
     e.preventDefault()
-    this.setState({
-      redirectTo: '/'
-    })
+    this.props.cancel()
   }
 
   getMode = () => {

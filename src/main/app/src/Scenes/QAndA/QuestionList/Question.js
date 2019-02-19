@@ -9,35 +9,20 @@ import {
 } from 'reactstrap';
 import { StyledCard, StyledCardSubtitle, Row, StyledAnswerCard } from './QuestionStyle'
 import { colors } from '../../../constants'
-import FormContainer from '../Form/FormContainer';
-import { createAnswer } from '../../../util/APIUtils'
-
-const getAnswerFormContainerDefaultProps = () => {
-  return {
-    fieldName: 'answerText',
-    payload: {
-      defaultValue: '',
-    },
-    labelText: 'Your answer:',
-    placeholder: 'Type your answer',
-    mode: 'add',
-    margin: '0',
-    maxWidth: 'auto',
-    submit: createAnswer
-  }
-}
 
 const Question = (props) => {
   const editQuestion = () => {
     // redirect to /edit-question and pass question data
     props.editQuestion(props.question)
   }
-  
+
   const deleteQuestion = () => {
     props.deleteQuestion(props.question.id)
   }
 
   const showAnswerForm = () => props.showAnswerForm(props.question.id)
+
+
   return (
 
     <Fragment>
@@ -68,16 +53,6 @@ const Question = (props) => {
           </Row>
         </CardBody>
       </StyledCard>
-
-        {/* Answer form */}
-
-      {props.showAnswerFormBool === true && (
-        <StyledAnswerCard>
-          <FormContainer
-            {...getAnswerFormContainerDefaultProps()}
-          />
-        </StyledAnswerCard>
-      )}
     </Fragment>
   )
 }
