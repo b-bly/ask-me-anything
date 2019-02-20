@@ -6,10 +6,12 @@ import { StyledButton, Container, StyledRow } from './QuestionsStyle'
 
 //Components
 import Question from './Question'
+import AnswerForm from './AnswerForm'
 
 class Questions extends Component {
 
   static Question = Question
+  static AnswerForm = AnswerForm
 
   render() {
     return (

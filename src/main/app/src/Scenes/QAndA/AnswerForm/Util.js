@@ -9,6 +9,6 @@ export const getAnswerFormContainerDefaultProps = () => {
     placeholder: 'Type your answer',
     mode: 'add',
     margin: '0',
-    maxWidth: 'auto',
+    maxWidth: 'auto'
   }
 }

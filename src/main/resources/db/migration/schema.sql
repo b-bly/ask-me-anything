@@ -28,3 +28,21 @@ CREATE TABLE `user_roles` (
   CONSTRAINT `fk_user_roles_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
   CONSTRAINT `fk_user_roles_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `questions` (
+	`id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`question_text` varchar(10000),
+	`author_id` bigint(20),
+	CONSTRAINT `fk_questions_author_id` FOREIGN KEY (`question_id`) REFERENCES `users` (`id`),
+	CONSTRAINT `pk_questions_id` PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `answers` (
+	`id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`answer_text` varchar(10000),
+	`author_id` bigint(20),
+	`question_id` bigint(20),
+	CONSTRAINT `pk_answers_id` PRIMARY KEY (`id`),
+	CONSTRAINT `fk_answers_author_id` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
+	CONSTRAINT `fk_answers_question_id` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

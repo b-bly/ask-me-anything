@@ -6,12 +6,6 @@ export const editQuestion = async (payload, scope) => {
   return result
 }
 
-export const cancel = () => {
-  this.setState({
-    redirectTo: '/'
-  })
-}
-
 export const getFormPropsContainerDefaultProps = () => {
   return {
     fieldName: 'questionText',
@@ -22,7 +16,8 @@ export const getFormPropsContainerDefaultProps = () => {
     placeholder: 'Type your question',
     mode: 'add',
     submit: createQuestion,
-    cancel: cancel,
+    cancelRedirectUrl: '/',
+    successRedirectUrl: '/'
   }
 }
 
@@ -33,6 +28,7 @@ export const getEditQuestionDefaultProps = () => {
     placeholder: 'Type your question',
     mode: 'edit',
     submit: editQuestion,
-    cancel: cancel,
+    cancelRedirectUrl: '/',
+    successRedirectUrl: '/'
   }
 }

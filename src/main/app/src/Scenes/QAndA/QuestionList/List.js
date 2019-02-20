@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import AnswerForm from './AnswerForm'
 import { getQuestions, deleteQuestion, createAnswer } from '../../../util/APIUtils'
 
 // Util
@@ -116,7 +115,12 @@ class List extends Component {
       questionId: questionId
     }
     const data = await createAnswer(payload)
+    this.hideAnswerForm()
+    // force update?
+    // or add answer on client side?
+    // this.getQuestionsCall()
   }
+
 
   render() {
     const questions = (
@@ -136,7 +140,7 @@ class List extends Component {
                   deleteQuestion={this.deleteQuestion.bind(this)}
                   showAnswerFormBool={showAnswerFormBool} />
                 {showAnswerFormBool === true && (
-                  <AnswerForm
+                  <Questions.AnswerForm
                     questionId={question.id}
                     createAnswer={this.createAnswer.bind(this)}
                     cancel={this.hideAnswerForm.bind(this)}

@@ -25,14 +25,17 @@ class CreateAnswer extends Component {
       }
     }
 
-    this.setState({
-      redirectTo: '/'
+    if (this.props.successRedirectUrl) this.setState({
+      redirectTo: this.props.successRedirectUrl
     })
   }
 
   cancel = (e) => {
     e.preventDefault()
-    this.props.cancel()
+    if (this.props.cancelRedirectUrl) this.setState({
+      redirectTo: this.props.cancelRedirectUrl
+    })
+    if (typeof this.props.cancel === 'function') this.props.cancel()
   }
 
   getMode = () => {
