@@ -23,13 +23,20 @@ const request = async (options) => {
   } catch (error) {
     console.log('error in request');
     console.log(error);
-    return {error: error}
+    return { error: error }
   }
 };
 
 //Answer methods
 
-// placeholder
+export const getAnswers = async () => {
+  const result = await request({
+    url: API_BASE_URL + "/answer",
+    method: 'GET'
+  })
+  return result
+}
+
 export const createAnswer = async (answer) => {
   const result = await request({
     url: API_BASE_URL + "/answer",
@@ -41,7 +48,7 @@ export const createAnswer = async (answer) => {
 
 // Question methods
 
-export const deleteQuestion = async (questionId) => {  
+export const deleteQuestion = async (questionId) => {
   const result = await request({
     url: API_BASE_URL + "/question/" + questionId,
     method: 'DELETE'

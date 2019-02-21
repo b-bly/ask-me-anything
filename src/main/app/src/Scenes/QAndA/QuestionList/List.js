@@ -3,11 +3,10 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import { getQuestions, deleteQuestion, createAnswer } from '../../../util/APIUtils'
+import { getQuestions, deleteQuestion, createAnswer, getAnswers } from '../../../util/APIUtils'
 
 // Util
-import {getAnswerFormContainerDefaultProps} from '../AnswerForm/Util'
-
+import { getAnswerFormContainerDefaultProps } from '../AnswerForm/Util'
 
 class List extends Component {
   constructor(props) {
@@ -19,6 +18,7 @@ class List extends Component {
       error: '',
       message: '',
       showAnswerFormId: -1,
+      answers: [],
     };
   }
 
@@ -27,26 +27,59 @@ class List extends Component {
   }
 
   getQuestionsCall = async () => {
-    let data = []
     try {
-      data = await getQuestions()
+      const data = await getQuestions()
       if (data.error) {
         console.log(data.error);
 
         this.setState({
           resolvedError: true,
-          error: data.error.error
+          error: 'There was an error getting questions'
         })
       } else {
         this.setState({
           resolvedSuccess: true,
           questions: data
+        }, () => this.getAnswersCall())
+      }
+    } catch (error) {
+      this.setState({
+        resolvedError: true,
+        error: 'There was an error getting questions'
+      })
+    }
+  }
+
+  getAnswersCall = async () => {
+    try {
+      const data = await getAnswers()
+      if (data && data.error) {
+        this.setState({
+          resolvedError: true,
+          error: 'There was an error getting answers'
+        })
+      } else {
+        console.log(data)
+
+        const formattedAnswers = {}
+        data.forEach((answer) => {
+          if (!formattedAnswers[answer.questionId]) {
+            formattedAnswers[answer.questionId] = [answer]
+          } else {
+            formattedAnswers[answer.questionId].push(answer)
+          }
+        })
+        console.log('answers:');
+        console.log(formattedAnswers)
+        this.setState({
+          resolvedSuccess: true,
+          answers: formattedAnswers
         })
       }
     } catch (error) {
       this.setState({
         resolvedError: true,
-        error: error
+        error: 'There was an error getting answers'
       })
     }
   }
@@ -146,7 +179,27 @@ class List extends Component {
                     cancel={this.hideAnswerForm.bind(this)}
                     {...getAnswerFormContainerDefaultProps()}
                   />
+
                 )}
+                <Questions.Answers>
+                  {() => (
+                    <Fragment>
+                      {typeof this.state.answers !== 'undefined' &&
+                        <Fragment>
+                          {typeof this.state.answers[question.id] !== 'undefined' &&
+                            <Fragment>
+                              {this.state.answers[question.id].map((answer) =>
+                                <Questions.Answer key={answer.id.toString()}
+                                  answer={answer} />
+                              )}
+                            </Fragment>
+                          }
+                        </Fragment>
+                      }
+                    </Fragment>
+                  )}
+                </Questions.Answers>
+
               </Fragment>
             )
           })

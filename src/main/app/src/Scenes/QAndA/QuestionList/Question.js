@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 //Components
 import { IconButton } from '../../../Components/IconButton'
@@ -7,7 +7,7 @@ import { IconButton } from '../../../Components/IconButton'
 import {
   CardText, CardBody
 } from 'reactstrap';
-import { StyledCard, StyledCardSubtitle, Row, StyledAnswerCard } from './QuestionStyle'
+import { StyledCard, StyledCardSubtitle, Row } from './QuestionStyle'
 import { colors } from '../../../constants'
 
 const Question = (props) => {
@@ -24,8 +24,6 @@ const Question = (props) => {
 
 
   return (
-
-    <Fragment>
       <StyledCard>
         <CardBody>
           <StyledCardSubtitle>
@@ -53,7 +51,6 @@ const Question = (props) => {
           </Row>
         </CardBody>
       </StyledCard>
-    </Fragment>
   )
 }
 

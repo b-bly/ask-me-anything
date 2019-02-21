@@ -18,7 +18,7 @@ public class Answer {
     private Long id;
     
     @Column(name="answer_text")
-    private String answer;
+    private String answerText;
     
     @ManyToOne(fetch=FetchType.LAZY, optional=false)
     @JoinColumn(name="question_id", nullable=false)
@@ -30,8 +30,8 @@ public class Answer {
     
     public Answer () {}
 
-	public Answer(String answer) {
-		this.answer = answer;
+	public Answer(String answerText) {
+		this.answerText = answerText;
 	}
 
 	public Long getId() {
@@ -42,12 +42,12 @@ public class Answer {
 		this.id = id;
 	}
 
-	public String getAnswer() {
-		return answer;
+	public String getAnswerText() {
+		return answerText;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setAnswerText (String answerText) {
+		this.answerText = answerText;
 	}
 
 	public User getUser() {
