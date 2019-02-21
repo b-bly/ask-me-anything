@@ -48,6 +48,14 @@ export const createAnswer = async (answer) => {
 
 // Question methods
 
+export const getAllQuestionsAndAnswers = async() => {
+  const result = await request({
+    url: API_BASE_URL + "/question/questions-and-answers/0/10", // + page + /size
+    method: 'GET'
+  })
+  return result
+}
+
 export const deleteQuestion = async (questionId) => {
   const result = await request({
     url: API_BASE_URL + "/question/" + questionId,

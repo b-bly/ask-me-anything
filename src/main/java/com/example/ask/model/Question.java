@@ -1,5 +1,7 @@
 package com.example.ask.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,10 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
     private User user;
+    
+    // mapped By "question" refers to property in Question class
+    @OneToMany(mappedBy="question")
+    private List<Answer> answers;
 
     public Question () {}
 
@@ -54,6 +61,14 @@ public class Question {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
     

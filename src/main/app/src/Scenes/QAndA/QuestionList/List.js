@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import { getQuestions, deleteQuestion, createAnswer, getAnswers } from '../../../util/APIUtils'
+import { getQuestions, deleteQuestion, createAnswer, getAnswers, getAllQuestionsAndAnswers } from '../../../util/APIUtils'
 
 // Util
 import { getAnswerFormContainerDefaultProps } from '../AnswerForm/Util'
@@ -23,7 +23,35 @@ class List extends Component {
   }
 
   componentDidMount() {
-    this.getQuestionsCall()
+    this.getQuestionsAndAnswersCall()
+  }
+
+  getQuestionsAndAnswersCall = async () => {
+    try {
+      const data = await getAllQuestionsAndAnswers()
+      if (data.error) {
+        console.log('ERROR');
+        
+        console.log(data);
+        this.setState({
+          resolvedError: true,
+          error: 'There was an error getting questions'
+        })
+      } else {
+        console.log('data: ');
+        console.log(data)
+        // this.setState({
+        //   resolvedSuccess: true,
+        //   questions: data
+        // })
+      }
+    } catch (error) {
+      console.log(error)
+      this.setState({
+        resolvedError: true,
+        error: 'There was an error getting questions'
+      })
+    }
   }
 
   getQuestionsCall = async () => {

@@ -11,7 +11,6 @@ import com.example.ask.model.Question;
 import com.example.ask.model.User;
 import com.example.ask.payload.AnswerRequest;
 import com.example.ask.payload.AnswerResponse;
-import com.example.ask.payload.QuestionResponse;
 import com.example.ask.repository.AnswerRepository;
 import com.example.ask.repository.QuestionRepository;
 import com.example.ask.repository.UserRepository;
@@ -56,4 +55,22 @@ public class AnswerService {
 		
 		return answerResponse;
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

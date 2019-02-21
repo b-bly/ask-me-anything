@@ -17,10 +17,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.ask.model.Question;
 import com.example.ask.payload.ApiResponse;
+import com.example.ask.payload.PagedResponse;
+import com.example.ask.payload.QuestionAndAnswerResponse;
 import com.example.ask.payload.QuestionRequest;
 import com.example.ask.payload.QuestionUpdateRequest;
 import com.example.ask.repository.QuestionRepository;
-import com.example.ask.repository.UserRepository;
 import com.example.ask.security.CurrentUser;
 import com.example.ask.security.UserPrincipal;
 import com.example.ask.service.QuestionService;
@@ -33,9 +34,6 @@ public class QuestionController {
 
 	@Autowired
 	private QuestionRepository questionRepository;
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@PostMapping
 	public ResponseEntity<?> createQuestion(@RequestBody QuestionRequest questionRequest,
@@ -53,6 +51,14 @@ public class QuestionController {
 	@GetMapping
 	public List<?> getAllQuestions() {
 		return questionService.getAllQuestions();
+	}
+	
+	//To do: Get page and size from request body
+	@GetMapping("/questions-and-answers/{page}/{size}")
+	public PagedResponse<QuestionAndAnswerResponse> getAllQuestionsAndAnswers(
+			@PathVariable int page, @PathVariable int size,
+			@CurrentUser UserPrincipal currentUser) {
+		return questionService.getAllQuestionsAndAnswers(currentUser, page, size);
 	}
 
 	@PutMapping
