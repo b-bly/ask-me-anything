@@ -31,7 +31,7 @@ class List extends Component {
       const data = await getAllQuestionsAndAnswers()
       if (data.error) {
         console.log('ERROR');
-        
+
         console.log(data);
         this.setState({
           resolvedError: true,
@@ -40,10 +40,10 @@ class List extends Component {
       } else {
         console.log('data: ');
         console.log(data)
-        // this.setState({
-        //   resolvedSuccess: true,
-        //   questions: data
-        // })
+        this.setState({
+          resolvedSuccess: true,
+          questions: data.content
+        })
       }
     } catch (error) {
       console.log(error)
@@ -212,18 +212,10 @@ class List extends Component {
                 <Questions.Answers>
                   {() => (
                     <Fragment>
-                      {typeof this.state.answers !== 'undefined' &&
-                        <Fragment>
-                          {typeof this.state.answers[question.id] !== 'undefined' &&
-                            <Fragment>
-                              {this.state.answers[question.id].map((answer) =>
-                                <Questions.Answer key={answer.id.toString()}
-                                  answer={answer} />
-                              )}
-                            </Fragment>
-                          }
-                        </Fragment>
-                      }
+                      {question.answers.map((answer) =>
+                        <Questions.Answer key={answer.id.toString()}
+                          answer={answer} />
+                      )}
                     </Fragment>
                   )}
                 </Questions.Answers>
