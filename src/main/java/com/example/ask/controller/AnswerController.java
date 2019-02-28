@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.ask.model.Answer;
 import com.example.ask.payload.AnswerRequest;
+import com.example.ask.payload.AnswerUpdateRequest;
 import com.example.ask.payload.ApiResponse;
 import com.example.ask.security.CurrentUser;
 import com.example.ask.security.UserPrincipal;
@@ -41,6 +43,13 @@ public class AnswerController {
 
 		return ResponseEntity.created(location) 
 				.body(new ApiResponse(true, "Answer Created Successfully"));
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> updateAnswer(@RequestBody AnswerUpdateRequest answerUpdateRequest,
+			@CurrentUser UserPrincipal currentUser) {
+		answerService.updateAnswer(answerUpdateRequest, currentUser);
+		return ResponseEntity.ok().body(new ApiResponse(true, "Answer updated successfully."));
 	}
 	
 	

@@ -3,7 +3,8 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import { getQuestions, deleteQuestion, createAnswer, getAnswers, getAllQuestionsAndAnswers } from '../../../util/APIUtils'
+import { getQuestions, deleteQuestion, createAnswer, getAnswers, getAllQuestionsAndAnswers,
+  editAnswer } from '../../../util/APIUtils'
 
 // Util
 import { getAnswerFormContainerDefaultProps, getEditAnswerFormContainerDefaultProps } from '../AnswerForm/Util'
@@ -195,11 +196,11 @@ class List extends Component {
   }
 
   editAnswer = async (answer) => {
-    // const payload = {
-    //   ...answer
-    // }
-    // const data = await editAnswer(payload)
-    // this.hideEditAnswerForm()
+    const payload = {
+      ...answer
+    }
+    const data = await editAnswer(payload)
+    this.hideEditAnswerForm()
     console.log("*** edit Answer ***")
     console.log(answer);
 

@@ -11,6 +11,8 @@ import com.example.ask.model.Question;
 import com.example.ask.model.User;
 import com.example.ask.payload.AnswerRequest;
 import com.example.ask.payload.AnswerResponse;
+import com.example.ask.payload.AnswerUpdateRequest;
+import com.example.ask.payload.QuestionUpdateRequest;
 import com.example.ask.repository.AnswerRepository;
 import com.example.ask.repository.QuestionRepository;
 import com.example.ask.repository.UserRepository;
@@ -56,9 +58,25 @@ public class AnswerService {
 		return answerResponse;
 	}
 	
+	public Question updateQuestion(QuestionUpdateRequest questionUpdateRequest, UserPrincipal currentUser) {
+		User user = userRepository.getOne(currentUser.getId());
 
+		Question question = new Question(questionUpdateRequest.getQuestionText());
+		question.setId(questionUpdateRequest.getId());
+		question.setUser(user);
+
+		return questionRepository.save(question);
+	}
 	
-	
+	public Answer updateAnswer(AnswerUpdateRequest answerUpdateRequest,
+			UserPrincipal currentUser) {
+//		User user = userRepository.getOne(answerUpdateRequest.getId());
+		
+		Answer answer = answerRepository.getOne(answerUpdateRequest.getId());
+		answer.setAnswerText(answerUpdateRequest.getAnswerText());
+		
+		return answerRepository.save(answer);
+	}
 	
 	
 	

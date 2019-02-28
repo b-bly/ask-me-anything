@@ -84,8 +84,6 @@ public class QuestionService {
 		// Get questions in pages
 		Pageable pageable = PageRequest.of(page,  size, Sort.Direction.ASC, "id");
 		Page<Question> questions = questionRepository.findAll(pageable);
-		System.out.println("**** questions ****");
-		System.out.println(questions);
 		
 		if (questions.getNumberOfElements() == 0) {
 			System.out.println("Num elements = 0");
