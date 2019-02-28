@@ -6,7 +6,7 @@ import Questions from './Questions'
 import { getQuestions, deleteQuestion, createAnswer, getAnswers, getAllQuestionsAndAnswers } from '../../../util/APIUtils'
 
 // Util
-import { getAnswerFormContainerDefaultProps } from '../AnswerForm/Util'
+import { getAnswerFormContainerDefaultProps, getEditAnswerFormContainerDefaultProps } from '../AnswerForm/Util'
 
 class List extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class List extends Component {
       error: '',
       message: '',
       showAnswerFormId: -1,
+      showEditAnswerFormId: -1,
       answers: [],
     };
   }
@@ -31,7 +32,6 @@ class List extends Component {
       const data = await getAllQuestionsAndAnswers()
       if (data.error) {
         console.log('ERROR');
-
         console.log(data);
         this.setState({
           resolvedError: true,
@@ -182,6 +182,28 @@ class List extends Component {
     // this.getQuestionsCall()
   }
 
+  showEditAnswerForm = (answerId) => {
+    this.setState({
+      showEditAnswerFormId: answerId
+    })
+  }
+
+  hideEditAnswerForm = () => {
+    this.setState({
+      showEditAnswerFormId: -1,
+    })
+  }
+
+  editAnswer = async (answer) => {
+    // const payload = {
+    //   ...answer
+    // }
+    // const data = await editAnswer(payload)
+    // this.hideEditAnswerForm()
+    console.log("*** edit Answer ***")
+    console.log(answer);
+
+  }
 
   render() {
     const questions = (
@@ -212,10 +234,42 @@ class List extends Component {
                 <Questions.Answers>
                   {() => (
                     <Fragment>
-                      {question.answers.map((answer) =>
-                        <Questions.Answer key={answer.id.toString()}
-                          answer={answer} />
-                      )}
+                      {question.answers.map((answer) => {
+                        const showEditAnswerFormBool = (this.state.showEditAnswerFormId === answer.id)
+                        console.log(this.state.showEditAnswerFormId);
+
+                        if (showEditAnswerFormBool) {
+                          // fieldName: 'answerText',
+                          // payload: {
+                          //   defaultValue: '',
+                          // },
+                          // labelText: 'Your answer:',
+                          // placeholder: 'Type your answer',
+                          // mode: 'add',
+                          // margin: '0',
+                          // maxWidth: 'auto'
+                          const answerProps = getEditAnswerFormContainerDefaultProps()
+                          answerProps.payload.defaultValue = answer.answerText
+                          return (
+                            <Questions.EditAnswerForm
+                              key={answer.id.toString()}
+                              questionId={question.id}
+                              cancel={this.hideEditAnswerForm.bind(this)}
+                              editAnswer={this.editAnswer.bind(this)}
+                              answer={answer}
+                              {...answerProps}
+                            />
+                          )
+                        } else {
+                          return (
+                            <Questions.Answer
+                              key={answer.id.toString()}
+                              answer={answer}
+                              showEditAnswerForm={this.showEditAnswerForm.bind(this)}
+                            />
+                          )
+                        }
+                      })}
                     </Fragment>
                   )}
                 </Questions.Answers>

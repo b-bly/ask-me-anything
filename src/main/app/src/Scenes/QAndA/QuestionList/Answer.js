@@ -13,9 +13,11 @@ import { colors } from '../../../constants'
 
 const Answer = (props) => {
 
-  const editAnswer = () => {
+  const showEditAnswerForm = () => {
     console.log('edit');
+    console.log(props);
     
+    props.showEditAnswerForm(props.answer.id)
   }
 
   const deleteAnswer = () => {
@@ -36,7 +38,7 @@ const Answer = (props) => {
             <IconButton
               icon="edit"
               color={colors.cyan}
-              action={editAnswer}
+              action={showEditAnswerForm}
             />
             <IconButton
               icon="trash"

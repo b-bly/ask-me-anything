@@ -9,6 +9,7 @@ import Question from './Question'
 import AnswerForm from '../AnswerForm/AnswerForm'
 import Answers from './Answers'
 import Answer from './Answer'
+import EditAnswerForm from '../AnswerForm/EditAnswerForm'
 
 class Questions extends Component {
 
@@ -16,6 +17,7 @@ class Questions extends Component {
   static AnswerForm = AnswerForm
   static Answers = Answers
   static Answer = Answer
+  static EditAnswerForm = EditAnswerForm
 
   render() {
     return (

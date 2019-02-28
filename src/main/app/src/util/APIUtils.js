@@ -46,6 +46,15 @@ export const createAnswer = async (answer) => {
   return result
 }
 
+export const editAnswer = async (answer) => {
+  const result = await request({
+    url: API_BASE_URL + "/answer",
+    method: 'PUT',
+    body: JSON.stringify(answer)
+  })
+  return result
+}
+
 // Question methods
 
 export const getAllQuestionsAndAnswers = async() => {
