@@ -55,6 +55,14 @@ export const editAnswer = async (answer) => {
   return result
 }
 
+export const deleteAnswer = async (answerId) => {
+  const result = await request({
+    url: API_BASE_URL + "/answer/" + answerId,
+    method: 'DELETE'
+  })
+  return result
+}
+
 // Question methods
 
 export const getAllQuestionsAndAnswers = async() => {

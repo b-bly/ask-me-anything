@@ -3,8 +3,10 @@ import { Redirect } from 'react-router-dom'
 
 // Components
 import Questions from './Questions'
-import { getQuestions, deleteQuestion, createAnswer, getAnswers, getAllQuestionsAndAnswers,
-  editAnswer } from '../../../util/APIUtils'
+import {
+  getQuestions, deleteQuestion, createAnswer, getAnswers, getAllQuestionsAndAnswers,
+  editAnswer, deleteAnswer
+} from '../../../util/APIUtils'
 
 // Util
 import { getAnswerFormContainerDefaultProps, getEditAnswerFormContainerDefaultProps } from '../AnswerForm/Util'
@@ -176,11 +178,24 @@ class List extends Component {
       ...answer,
       questionId: questionId
     }
-    const data = await createAnswer(payload)
-    this.hideAnswerForm()
-    // force update?
-    // or add answer on client side?
-    // this.getQuestionsCall()
+    let data = {}
+    try {
+      const data = await createAnswer(payload)
+
+      console.log("*** create question response ***")
+      console.log(data);
+      
+      if (data.error) {
+        this.setState({
+          message: JSON.stringify(data.error)
+        })
+      } else {
+        this.getAllQuestionsAndAnswers()
+        this.hideAnswerForm()
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   showEditAnswerForm = (answerId) => {
@@ -199,11 +214,40 @@ class List extends Component {
     const payload = {
       ...answer
     }
-    const data = await editAnswer(payload)
-    this.hideEditAnswerForm()
     console.log("*** edit Answer ***")
     console.log(answer);
 
+    try {
+      const data = await editAnswer(payload)
+      if (data.error) {
+        this.setState({
+          message: JSON.stringify(data.error)
+        })
+      } else {
+        // update the answer in this component's state
+        let updatedQuestions = this.state.questions.map((question) => {
+          question.answers = question.answers.map((oldAnswer) => {
+            if (answer.id === oldAnswer.id) {
+              return answer
+            }
+            return oldAnswer
+          })
+          return question
+        })
+        this.setState({
+          message: 'Updated successfully',
+          questions: updatedQuestions
+        },
+          this.hideEditAnswerForm()
+        )
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  deleteAnswer = (answerId) => {
+    deleteAnswer(answerId)
   }
 
   render() {
@@ -235,7 +279,7 @@ class List extends Component {
                 <Questions.Answers>
                   {() => (
                     <Fragment>
-                      {question.answers.map((answer) => {
+                      {question.answers.map((answer, j) => {
                         const showEditAnswerFormBool = (this.state.showEditAnswerFormId === answer.id)
                         console.log(this.state.showEditAnswerFormId);
 
@@ -253,7 +297,7 @@ class List extends Component {
                           answerProps.payload.defaultValue = answer.answerText
                           return (
                             <Questions.EditAnswerForm
-                              key={answer.id.toString()}
+                              key={j.toString()}
                               questionId={question.id}
                               cancel={this.hideEditAnswerForm.bind(this)}
                               editAnswer={this.editAnswer.bind(this)}
@@ -264,9 +308,10 @@ class List extends Component {
                         } else {
                           return (
                             <Questions.Answer
-                              key={answer.id.toString()}
+                              key={j.toString()}
                               answer={answer}
                               showEditAnswerForm={this.showEditAnswerForm.bind(this)}
+                              deleteAnswer={this.deleteAnswer.bind(this)}
                             />
                           )
                         }

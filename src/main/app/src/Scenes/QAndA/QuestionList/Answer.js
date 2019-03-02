@@ -21,8 +21,7 @@ const Answer = (props) => {
   }
 
   const deleteAnswer = () => {
-    console.log('delete');
-    
+    props.deleteAnswer(props.answer.id)    
   }
 
   return (
