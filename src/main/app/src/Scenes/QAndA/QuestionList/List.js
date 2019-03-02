@@ -34,22 +34,17 @@ class List extends Component {
     try {
       const data = await getAllQuestionsAndAnswers()
       if (data.error) {
-        console.log('ERROR');
-        console.log(data);
         this.setState({
           resolvedError: true,
           error: 'There was an error getting questions'
         })
       } else {
-        console.log('data: ');
-        console.log(data)
         this.setState({
           resolvedSuccess: true,
           questions: data.content
         })
       }
     } catch (error) {
-      console.log(error)
       this.setState({
         resolvedError: true,
         error: 'There was an error getting questions'
@@ -90,8 +85,6 @@ class List extends Component {
           error: 'There was an error getting answers'
         })
       } else {
-        console.log(data)
-
         const formattedAnswers = {}
         data.forEach((answer) => {
           if (!formattedAnswers[answer.questionId]) {
@@ -100,8 +93,6 @@ class List extends Component {
             formattedAnswers[answer.questionId].push(answer)
           }
         })
-        console.log('answers:');
-        console.log(formattedAnswers)
         this.setState({
           resolvedSuccess: true,
           answers: formattedAnswers
@@ -145,7 +136,7 @@ class List extends Component {
             message: JSON.stringify(data.error)
           })
         } else {
-          let updatedQuestions = this.state.questions.filter((question) => {
+          const updatedQuestions = this.state.questions.filter((question) => {
             if (question.id === questionId) return false
             return true
           })
@@ -181,16 +172,12 @@ class List extends Component {
     let data = {}
     try {
       const data = await createAnswer(payload)
-
-      console.log("*** create question response ***")
-      console.log(data);
-      
       if (data.error) {
         this.setState({
           message: JSON.stringify(data.error)
         })
       } else {
-        this.getAllQuestionsAndAnswers()
+        this.getQuestionsAndAnswersCall()
         this.hideAnswerForm()
       }
     } catch (error) {
@@ -214,8 +201,6 @@ class List extends Component {
     const payload = {
       ...answer
     }
-    console.log("*** edit Answer ***")
-    console.log(answer);
 
     try {
       const data = await editAnswer(payload)
@@ -246,8 +231,36 @@ class List extends Component {
       console.log(error);
     }
   }
-  deleteAnswer = (answerId) => {
-    deleteAnswer(answerId)
+
+  deleteAnswer = async (answerId) => {
+    const userPermission = window.confirm("Are you sure you want to delete this?")
+    if (userPermission) {
+      try {
+        const data = await deleteAnswer(answerId)
+        if (data.error) {
+          this.setState({
+            message: JSON.stringify(data.error)
+          })
+        } else {
+          const updatedQuestions = this.state.questions.map((question) => {
+            if (question.answers) {
+              question.answers = question.answers.filter((answer) => {
+                if (answer.id === answerId) return false
+                return true
+              })
+            }
+            return question
+          })
+          this.setState({
+            message: 'Deleted successfully',
+            questions: updatedQuestions
+          })
+        }
+      } catch (error) {
+        console.log('Delete answer error:');
+        console.log(error)
+      }
+    }
   }
 
   render() {
@@ -281,7 +294,6 @@ class List extends Component {
                     <Fragment>
                       {question.answers.map((answer, j) => {
                         const showEditAnswerFormBool = (this.state.showEditAnswerFormId === answer.id)
-                        console.log(this.state.showEditAnswerFormId);
 
                         if (showEditAnswerFormBool) {
                           // fieldName: 'answerText',

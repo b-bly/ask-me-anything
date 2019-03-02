@@ -79,7 +79,9 @@ public class AnswerService {
 	}
 	
 	
-	
+	public void deleteAnswer(Long answerId) {
+		answerRepository.deleteById(answerId);
+	}
 	
 	
 	

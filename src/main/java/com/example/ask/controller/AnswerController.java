@@ -19,6 +19,7 @@ import com.example.ask.model.Answer;
 import com.example.ask.payload.AnswerRequest;
 import com.example.ask.payload.AnswerUpdateRequest;
 import com.example.ask.payload.ApiResponse;
+import com.example.ask.repository.AnswerRepository;
 import com.example.ask.security.CurrentUser;
 import com.example.ask.security.UserPrincipal;
 import com.example.ask.service.AnswerService;
@@ -28,13 +29,14 @@ import com.example.ask.service.AnswerService;
 public class AnswerController {
 	@Autowired
 	private AnswerService answerService;
+	
+	@Autowired
+	private AnswerRepository answerRepository;
 
 	@PostMapping
 	public ResponseEntity<?> createAnswer(@RequestBody AnswerRequest answerRequest,
 			@CurrentUser UserPrincipal currentUser) {
 
-		System.out.println("Answer request: ");
-		System.out.println(answerRequest.getAnswerText());
 
 		Answer answer = answerService.createAnswer(answerRequest, currentUser);
 
@@ -54,10 +56,17 @@ public class AnswerController {
 	
 
 	@DeleteMapping("/{answerId}")
-	public void deleteAnswer(@PathVariable(value = "answerId") Long answerId,
+	public ResponseEntity<?> deleteAnswer(@PathVariable(value = "answerId") Long answerId,
 		@CurrentUser UserPrincipal currentUser) {
-			System.out.println("delete answerId: " + answerId);
 			
+			Answer answer = answerRepository.getOne(answerId);
+			Long authorId = answer.getUser().getId();
+			if (authorId != currentUser.getId()) {
+				return ResponseEntity.ok().body(new ApiResponse(true, "Not authorized"));
+			} else {
+				answerService.deleteAnswer(answerId);
+				return ResponseEntity.ok().body(new ApiResponse(true, "Answer deleted successfully"));
+			}
 		}
 
 	@GetMapping
