@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 // Style
-import { StyledButton, Container, StyledRow } from './QuestionsStyle'
+import { StyledButton, Container, StyledRow, CenteredColumn } from './QuestionsStyle'
 
 //Components
 import Question from './Question'
@@ -29,9 +29,9 @@ class Questions extends Component {
             color="primary">New Question
           </StyledButton>
         </StyledRow>
-        <Fragment>
+        <CenteredColumn>
           {this.props.children()}
-        </Fragment>
+        </CenteredColumn>
       </Container>
     )
   }

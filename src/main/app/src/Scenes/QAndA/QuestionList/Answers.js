@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container } from './QuestionsStyle'
+import { Container } from './AnswerStyle'
 
 class Answers extends Component {
 

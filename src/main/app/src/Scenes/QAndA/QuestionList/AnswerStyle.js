@@ -11,3 +11,11 @@ export const StyledAnswerCard = styled(StyledCard)`
   margin: 5px 100px;
   width: calc(90% - 90px);
 `
+
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: flex-start;
+`
