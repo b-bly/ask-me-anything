@@ -5,7 +5,7 @@ Ask a question or answer a question.  That's all!
 This is a simple app I made to practice working with Spring Boot and a React front end.  I started with some code modified from [Rajeev's tutorial](https://www.callicoder.com/spring-boot-spring-security-jwt-mysql-react-app-part-1/).
 
 
-![app picture](/no-more-pain-screenshot.jpeg)
+![app picture](/src/main/app/src/ask-me-anything-picture.png)
 
 ## Built With
 
