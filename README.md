@@ -24,7 +24,7 @@ ReactJS, Spring Boot, Spring Data JPA, Spring Security and MySQL.
 
 
 ### Installing and Development
-Steps to Setup the Spring Boot Back end app (polling-app-server)
+Steps to Setup the Spring Boot Back end app (in the root directory)
 
 1. **Clone the application**
 
@@ -68,7 +68,7 @@ Run the following with the name of the jar file:
 ```bash
 	java -jar name-of-the-jar-file.jar
 	```
-  
+
 5. **Default Roles**
 	
 	The Spring Boot api uses role based authorization powered by spring security. To add the default roles in the database, there are sql queries in `src/main/resources/data.sql` file. Spring boot will automatically execute this script on startup:
